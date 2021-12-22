@@ -1,3 +1,6 @@
+from collections import Counter
+import operator
+from functools import reduce
 import itertools
 
 '''iterable 곱집합 구하기'''
@@ -11,6 +14,7 @@ def solution_cartesian_product(*my_list):
 
     # cartesian product - 데카르트 곱. DB의 join과 비슷
     # 두개 이상의 리스트의 모든 조합을 구할때 사용
+    # 시간 복잡도 매우 높음
     cartesian = list(itertools.product(*my_list))
     print(f'[{len(cartesian)}]cartesian')
 
@@ -33,7 +37,7 @@ def solution_sum(my_list: list) -> list:
     '''방법2 - sum함수'''
     # sum(iterable, start_value)
     # 빈 배열에서 시작해서 숫자 원소 하나씩 가져와서 추가하기
-    # 2차원 리스트일 경우 각 요소 배열 다 돌고 난 다음에 다음 요소 배열 돔
+    # sum 함수 : += 로 누적해서 더해감. 리스트 +=는 리스트 합치는 연산임
     return sum(my_list, [])
 
 
@@ -50,37 +54,51 @@ def solution_chain_and_unpacking(my_list: list) -> list:
 def solution_list_comprehension(my_list: list) -> list:
     '''방법5 - list comprehension 이용'''
     # 배열 원소 하나씩 가져온 후 각 배열 원소 안 데이터 하나씩 가져와서 리스트 생성
-    return [element (for array in my_list) for element in array]
+    # array = [array for array in my_list]
+    # element = [element for element in array]
+    return [element for array in my_list for element in array]
+
+
+def solution_reduce(my_list: list) -> list:
+    '''방법6 - reduce 함수 이용 1'''
+    return list(reduce(lambda x, y: x + y, my_list))
+
+
+def solution_reduce_and_operator(my_list: list) -> list:
+    '''방법7 - reduce 함수 이용 2'''
+    return list(reduce(operator.add, my_list))
+
+
+# def solution_reduce(my_list: list) -> list:
+#     '''방법8 - numpy 라이브러리의 flatten 이용 (각 원소의 길이가 동일한 경우에만 사용 가능)'''
+#     return numpy.array(my_list).flatten().tolist()
 
 
 my_list = [[1, 2], [3, 4], [5, 6]]
 print(solution_for(my_list))
-print(solution_for(my_list))
+print(solution_sum(my_list))
+print(solution_chain_and_unpacking(my_list))
+print(solution_chain_from_iterable(my_list))
+print(solution_list_comprehension(my_list))
+print(solution_reduce(my_list))
+print(solution_reduce_and_operator(my_list))
 
-# 방법 5 - reduce 함수 이용 1
-# answer = list(reduce(lambda x, y: x + y, my_list))
-#
-# # 방법 6 - reduce 함수 이용 2
-# answer = list(reduce(operator.add, my_list))
-#
-# # 방법 7 - numpy 라이브러리의 flatten 이용 (각 원소의 길이가 동일한 경우에만 사용 가능)
-# answer = np.array(my_list).flatten().tolist()
-#
-# dict = {}
-# dict.items()
-# k
 # ------------------------------------------------------------------
-# permutations순열 순서가 있는것 nPr = n!/(n-r)!
-# combinations조합 순서가 없는것 nCr = nPr/r! = n!/r!(n-r)!
-# 주의 : combinations, permutations, product 모두 generator이기 때문에 list()로 캐스팅하여 저장하지 않으면
-# 한번의 루핑이후 사라짐
+# permutation 순열 순서가 있는것 nPr = n!/(n-r)!
+# combination 조합 순서가 없는것 nCr = nPr/r! = n!/r!(n-r)!
+# 주의 : combinations, permutations, product 모두 generator 이기 때문에
+# list()로 캐스팅하여 저장하지 않으면 한번의 루핑이후 사라짐
+
 pool = ['A', 'B', 'C']
+
+# 튜플 iterator반환
+print(list(itertools.permutations(pool)))
 print(list(map(''.join, itertools.permutations(pool))))
 print(list(map(''.join, itertools.permutations(pool, 2))))
 
 
-# ??
-def permute(arr):
+def permute(arr: list) -> list:
+    '''permutaion 함수 구현하기'''
     result = [arr[:]]
     c = [0] * len(arr)
     i = 0
@@ -100,44 +118,38 @@ def permute(arr):
 
 
 print(permute(pool))
+
+
 # ------------------------------------------------------------------
-'''가장 많이 등장하는 알파벳 찾기 - counter(어떤 원소가 시퀀스 타입에 몇 번이나 등장하는지'''
-
-
-def solution_most_common_alphabet(my_str):
-    dic = collections.Counter(my_str)
+def solution_most_common_alphabet(my_str: str) -> str:
+    '''가장 많이 등장하는 알파벳 찾기 - counter(어떤 원소가 시퀀스 타입에 몇 번이나 등장하는지'''
+    dic = Counter(my_str)
     maximum = max(dic.values())
+
+    # filter 함수
     result = filter(lambda x: x[1] == maximum, dic.items())
+
     answer = [key for key, value in result]
     answer.sort()
-    print(''.join(answer))
+
+    return ''.join(answer)
 
 
-# counter - 해시 가능한 객체를 새기 위한 dict 서브 클래스
-# list.count의 time complexity는 O(N) dictionary의 원소를 접근하는데에는 (1)
 my_str = "dfdefdgf"
-solution_most_common_alphabet(my_str)
+answer = solution_most_common_alphabet(my_str)
+print(answer)
 
-# counter dict 타입으로 생성됨
-my_str = 'hellomynameiskimsoohuynk'
-answer = collections.Counter(my_str)
-print(f'h : {answer["h"]}')
-print(f'counter : {answer}')
+'''counter에 대해서'''
+# counter - 해시 가능한 객체를 세기 위한 dict 서브 클래스. 즉, 데이터를 count와 매핑하기 위한 클래스
+# 해시 : 임의의 길이를 갖는 임의의 데이터를 고정된 길이의 데이터로 매핑
+# list.count의 time complexity는 O(N^2) dictionary O(N)
 
-# n개의 가장 흔한 요소와 그 개수를 튜플로, 가장 흔한 것부터 가장 적은 것 순으로 나열한 리스트를 반환
-# 개수가 같은 요소를 처음 발견된 순서를 유지
-print(f'most_common : {answer.most_common(1)}')
+# Counter().most_common() n개의 가장 item(element, count)를 가장 흔한 것부터 가장 적은 것 순으로 나열한 리스트를 반환
+# 개수가 같은 요소를 처음 발견된 순서를 유지. 즉 같은 갯수의 요소가 2개이상이고 most_common()을 구한다면 가장 먼저 발견된 요소를 반환
+c = Counter(my_str)
+print(f'most_common : {c.most_common(1)}')  # 이걸로는 최대 갯수가지는 원소 전체 구할 수 없음
+print(f'most_common : {c.most_common()}')  # Counter() 전체 출력
 
 # a new counter from keyword args
-example = collections.Counter(cats=4, dogs=10, rabbits=11, lions=12)
+example = Counter(cats=4, dogs=10, rabbits=11, lions=12)
 print(f'how many cats are here? : {example["cats"]}')
-
-# def solution_most_common_alphabet(my_str):
-#     c = collections.Counter(my_str)
-#     # sort() 함수는 반환 값 없기 때문에 바로 출력할 수 없음.
-#     most_common = c.most_common(1)
-#     most_common.sort()
-#     # 알파벳만 리스트로 모으기
-#     print(f'most_common : {most_common}')
-#     print(f'가장 많이 등장하는 알파벳 사전 순 : {"".join([counters[0] for counters in most_common])}')
-#     # print(f'가장 많이 등장하는 알파벳 사전 순 : {c}')
