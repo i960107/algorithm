@@ -4,20 +4,23 @@ class Node:
         self.next = None
 
 
-class BasicLinkedList:
+class LinkedList:
     def __init__(self):
         self.head = None
-        self.nodeCount = 0
+        self.node_count = 0
 
-    def get_length(self) -> int:
-        return self.nodeCount
+    def get_node_count(self) -> int:
+        return self.node_count
 
     def concat(self, l2) -> None:
-        if self.get_length() == 0:
+        # 예외) 앞 배열이 빈 경우. (뒷 배열이 빈 경우 상관없음)
+        if self.get_node_count() == 0:
             self.head = l2.head
         else:
-            tail = self.get_at(self.get_length() - 1)
+            tail = self.get_at(self.get_node_count())
             tail.next = l2.head
+
+        self.node_count += l2.node_count
 
     def insert(self, pos: int, node: Node) -> bool:
         if pos == 0:
@@ -31,11 +34,11 @@ class BasicLinkedList:
                 prev.next = node
             except IndexError:
                 return False
-        self.nodeCount += 1
+        self.node_count += 1
         return True
 
     def pop(self, pos: int) -> int:
-        if pos < 0 or pos > self.nodeCount - 1:
+        if pos < 0 or pos > self.node_count - 1:
             raise IndexError
 
         if pos == 0:
@@ -48,43 +51,47 @@ class BasicLinkedList:
                 prev.next = curr.next
             except ValueError:
                 return False
-        self.nodeCount -= 1
+        self.node_count -= 1
         return curr.data
 
     def get_at(self, pos: int) -> Node:
-        '''pos 번째 원소 가져오기. 원소의 data 반환 아님'''
-        # 배열과 마찬가지로 index는 리스트의 길이 -1 까지 존재
-        if pos < 0 or pos > self.nodeCount - 1:
+        # pos 번째 원소 가져오기. 원소의 data 반환 아님
+        # index 는 1부터 시작- 어떤 이점? 마지막 index가 nodeCount랑 같음
+        if pos < 1 or pos > self.get_node_count():
             raise IndexError
-        i = 0
+
+        i = 1
         curr = self.head
-        while i <= pos:
+
+        while i < pos:
             i += 1
             curr = curr.next
 
         return curr
 
-    def traverse(self) -> None:
-        i = 0
+    def traverse(self) -> list:
         curr = self.head
-        while i < self.nodeCount:
-            print(f'{curr.data}', end='   ')
+        l = []
+
+        #index 비교 필요 없이 curr이 None인지로 배열의 끝 판단
+        while curr:
+            l.append(curr.data)
             curr = curr.next
-            i += 1
+        return l
 
 
 class LinkedList:
     def __init__(self):
-        self.nodeCount = 0
+        self.node_count = 0
         self.head = Node(None)
         self.tail = None
         self.head.next = self.tail
 
-    def getNodeCount(self):
-        return self.nodeCount
+    def getnode_count(self):
+        return self.node_count
 
     def getAt(self, pos):
-        if pos < 0 or pos > self.nodeCount:
+        if pos < 0 or pos > self.node_count:
             return None
 
         i = 0
@@ -113,7 +120,7 @@ class LinkedList:
         if prev.next is None:
             self.tail = newNode
 
-        self.nodeCount += 1
+        self.node_count += 1
 
         return True
 
@@ -130,7 +137,7 @@ if __name__ == '__main__':
             print('삽입 실패')
         else:
             linkedList.traverse()
-            print(f'nodeCount : {linkedList.nodeCount}')
+            print(f'node_count : {linkedList.node_count}')
     while True:
         pos = int(input('참조할 원소의 위치(-1 입력시 종료):'))
         if pos == -1:
@@ -148,7 +155,7 @@ if __name__ == '__main__':
             print('삭제 실패')
         else:
             linkedList.traverse()
-            print(f'nodeCount : {linkedList.nodeCount}')
+            print(f'node_count : {linkedList.node_count}')
 
     linkedList2 = BasicLinkedList()
     linkedList.concat(linkedList2)
