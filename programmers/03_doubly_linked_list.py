@@ -29,6 +29,7 @@ class DoublyLinkedList:
     def traverse(self):
         curr = self.head
         result = []
+        # dummy tail을 제외하기 위해서 curr.next.next의 유효성을 확인
         while curr.next.next:
             curr = curr.next
             result.append(curr.data)
@@ -46,7 +47,8 @@ class DoublyLinkedList:
         return self.nodeCount
 
     def get_at(self, pos):
-        if pos < 1 or pos > self.getLength():
+        # dummy head와 dummy tail을 참조할 때 있음
+        if pos < 0 or pos > self.get_length() + 1:
             raise IndexError
 
         if pos < self.get_length() // 2:
@@ -64,40 +66,60 @@ class DoublyLinkedList:
 
         return curr
 
-    def insert_after(self, prev, newNode):
-        next = prev.next
-        prev.next = newNode
-        next.prev = newNode
-        newNode.prev = prev
-        newNode.next = next
-        self.nodeCount += 1
+    def insert_after(self, prev: Node, new_node: Node) -> bool:
+        next_node = prev.next
+        new_node.next = next_node
+        new_node.prev = prev
+        prev.next = new_node
+        next_node.prev = new_node
+        self.node_count += 1
         return True
 
-    def insert_at(self, pos, newNode):
-        if pos < 1 or pos > self.nodeCount:
+    def insert_before(self, next_node: Node, new_node: Node) -> bool:
+        prev = next_node.prev
+        new_node.prev = next_node.prev
+        new_node.next = prev.next
+        prev.next = new_node
+        next_node.prev = new_node
+        self.node_count += 1
+        return True
+
+    def insert_at(self, pos: int, new_node: Node) -> bool:
+        if pos < 1 or pos > self.get_length() + 1:
             return False
 
         prev = self.get_at(pos - 1)
-        return self.insert_after(prev, newNode)
 
-    def pop_after(self, prev):
+        return self.insert_after(prev, new_node)
+
+    def pop_after(self, prev: Node) -> int:
         curr = prev.next
-        next = curr.next
-        prev.next = next
-        next.prev = prev
-        self.nodeCount -= 1
+        next_node = curr.next
+        prev.next = next_node
+        curr.prev = prev
+        self.node_count -= 1
         return curr.data
 
-    def pop_at(self, pos):
-        if pos < 1 or pos > self.nodeCount:
-            raise IndexError('Index out of range')
+    def pop_before(self, next_node: Node) -> int:
+        curr = next_node.prev
+        prev = curr.prev
+        prev.next = next_node
+        next_node.prev = prev
+        self.node_count -= 1
+        return curr.data
+
+    def pop_at(self, pos: int) -> int:
+        if pos < 1 or pos > self.get_length():
+            raise IndexError
 
         prev = self.get_at(pos - 1)
+
         return self.pop_after(prev)
 
-    def concat(self, L):
-        self.tail.prev.next = L.head.next
-        L.head.next.prev = self.tail.prev
-        self.tail = L.tail
-
-        self.nodeCount += L.nodeCount
+    def concat(self, l2):
+        if l2.node_count == 0:
+            return
+        self.tail.prev.next = l2.head.next
+        l2.head.next.prev = self.tail.prev
+        self.tail = l2.tail
+        self.node_count += l2.node_count
