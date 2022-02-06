@@ -11,10 +11,10 @@ class DoublyLinkedList:
         self.tail = Node(None)
         self.head.next = self.tail
         self.tail.prev = self.head
-        self.nodeCount = 0
+        self.node_count = 0
 
     def __repr__(self):
-        if self.nodeCount == 0:
+        if self.node_count == 0:
             return 'LinkedList : empty'
 
         s = ''
@@ -44,10 +44,11 @@ class DoublyLinkedList:
         return result
 
     def get_length(self):
-        return self.nodeCount
+        return self.node_count
 
     def get_at(self, pos):
         # dummy head와 dummy tail을 참조할 때 있음
+        # 빈 배열이더라도 0,1 참조시 index error 발생하지 않음.
         if pos < 0 or pos > self.get_length() + 1:
             raise IndexError
 
@@ -60,7 +61,7 @@ class DoublyLinkedList:
         else:
             curr = self.tail
             i = 0
-            while i < self.nodeCount - pos + 1:
+            while i < self.node_count - pos + 1:
                 curr = curr.prev
                 i += 1
 
@@ -123,3 +124,4 @@ class DoublyLinkedList:
         l2.head.next.prev = self.tail.prev
         self.tail = l2.tail
         self.node_count += l2.node_count
+
