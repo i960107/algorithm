@@ -29,8 +29,8 @@ class CircularQueues:
         #     else self.rear + 1
 
         # rear 포인터 조정 후 값 삽입
-        # 위와 같은 방법이지만X 간단하게 표현
-        self.rear = (self.rear + 1) % self.maxCount
+        # 위와 같은 방법이지만 간단하게 표현
+        # self.rear = (self.rear + 1) % self.maxCount
 
         self.data[self.rear] = x
 
@@ -41,11 +41,11 @@ class CircularQueues:
             raise IndexError('Queue empty')
 
         # self.front = 0 \
-        #     if self.front == self.front - 1 \
+        #     if self.front == self.maxCount - 1 \
         #     else self.front + 1
 
         # front 포인터 조정한 후에 값 삭제
-        self.front = (self.front + 1) % self.maxCount
+        # self.front = (self.front + 1) % self.maxCount
 
         result = self.data[self.front]
 
@@ -66,6 +66,7 @@ print(f'front {q.front} rear {q.rear}')
 q.enqueue(2)
 q.enqueue(3)
 print(q.dequeue())
+print(f'front {q.front} rear {q.rear}')
 q.enqueue(4)
 print(f'front {q.front} rear {q.rear}')
 print(q.dequeue())
