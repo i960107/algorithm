@@ -1,3 +1,7 @@
+from __future__ import annotations
+from typing import Any, Type
+
+
 class Node:
     def __init__(self, key, data):
         self.key = key
@@ -101,7 +105,7 @@ class BinSearchTree:
             elif nChildren == 1:
                 child = node.left if node.left else node.right
                 if parent:
-                    if node.key<parent.key:
+                    if node.key < parent.key:
                         parent.left = child
                     else:
                         parent.right = child
@@ -125,3 +129,45 @@ class BinSearchTree:
             return True
         else:
             return False
+
+
+# ------------------------------------------
+'''doit 자료구조와 함께 배우는 알고리즘 입문 이진 검색 트리 구현'''
+
+
+class DoNode:
+    def __init__(self, key: Any, value: Any, left: DoNode = None, right: DoNode = None):
+        self.key = key
+        self.value = value
+        self.left = left
+        self.right = right
+
+
+class DoBinarySearchTree:
+    def __init__(self):
+        # 빈 이진트리로 생성
+        self.root = None
+
+    def search(self, key: Any) -> Any:
+        '''키 값으로 노드를 검색 후 노드의 value를 반환'''
+        pass
+
+    def add(self, key: Any, value: Any) -> bool:
+        '''키가 key이고 값이 value인 노드를 삽입'''
+        pass
+
+    def remove(self, key: Any) -> bool:
+        '''키가 key인 노드를 삭제'''
+        pass
+
+    def dump(self) -> None:
+        '''모든 노드를 키의 오름차순으로 출력'''
+        pass
+
+    def min_key(self):
+        '''최소 키를 반환'''
+        pass
+
+    def max_key(self):
+        '''최대 키를 반환'''
+        pass
