@@ -30,7 +30,9 @@ class CircularQueues:
 
         # rear 포인터 조정 후 값 삽입
         # 위와 같은 방법이지만 간단하게 표현
-        # self.rear = (self.rear + 1) % self.maxCount
+        self.rear = (self.rear + 1) % self.maxCount
+        # 값 하나 들어갔을때는 front==-1 rear ==0
+
 
         self.data[self.rear] = x
 
@@ -44,8 +46,8 @@ class CircularQueues:
         #     if self.front == self.maxCount - 1 \
         #     else self.front + 1
 
-        # front 포인터 조정한 후에 값 삭제
-        # self.front = (self.front + 1) % self.maxCount
+        #front 포인터 조정한 후에 값 삭제
+        self.front = (self.front + 1) % self.maxCount
 
         result = self.data[self.front]
 
