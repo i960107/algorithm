@@ -27,7 +27,7 @@ def solution(bridge_length: int, weight: int, truck_weights: list) -> int:
         if waiting_truck_index > len(truck_weights) - 1:
             break
 
-    while end != 0 or bridge_queue[end] != None:
+    while end != 0 or bridge_queue[end]:
         if bridge_queue[end]:
             weight_on_bridge -= bridge_queue[end]
             # 다리 건넌 트럭 처리
@@ -88,8 +88,6 @@ def solution2(bridge_length: int, weight: int, truck_weights: list) -> int:
             weight_on_bridge += truck_weights[truck_waiting]
             truck_waiting += 1
 
-        # 모든 트럭이 다 다리를 지났는지 트럭 내리고, 인덱스 조정 후 검사하기
-        # truck_weights 마지막 인덱스보다 큰 값 가지고 있어야 대기하고 있는 트럭이 없는것
         if len(truck_done) == len(truck_weights):
             break
 

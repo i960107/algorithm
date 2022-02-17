@@ -1,38 +1,13 @@
-
-
 class Node:
     def __init__(self, item):
         self.left = None
         self.right = None
+        # 인덱스 역할을 할 key 없어도 되나보지?
         self.data = item
-
-    def size(self):
-        l = self.left.size() if self.left else 0
-        r = self.right.size() if self.right else 0
-        return l + r + 1
-
-    def depth(self):
-        l = self.left.dpeth() if self.left else 0
-        r = self.right.depth() if self.right else 0
-        return l + 1 if l >= r else r + 1
-
-    def inorder(self):
-        traversal = []
-        if self.left:
-            traversal += self.left.inorder()
-        traversal.append(self.data)
-        if self.right:
-            traversal += self.right.inorder()
-        return traversal
-
-    def preorder(self):
-        pass
-
-    def postorder(self):
-        pass
 
 
 class BinaryTree:
+    '''이진 트리의 추상적 자료구조 구현'''
     def __init__(self):
         self.root = None
 
