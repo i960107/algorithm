@@ -9,14 +9,22 @@ def solution(id_list: list, report: list, k: int) -> list:
 
     # 1) 신고당한사람 : 신고한 사람들
     d_reported = defaultdict(set)
+    # d_reported = {}
     for r in report:
         reporter = r.split(" ")[0]
         reported = r.split(" ")[1]
+        # # 아무것도 안넣은 상태에서는 None임. get으로 가져오면 안됨.인덱스로 가져오기.
+        # print(d_reported.get(reported))
+
         # set 자료형은 참조형
-        d_reported[reported].add(reporter)
         # int 자료형은 기본형이기 때문에 +1 한 후 값에 대입해주어야 함.
+        # d_reported[reported].add(reporter) #defaultdict후 인덱스로 검색 안 후 첫번째 값 삽입시 값 들어감
+        # d_reported.get(reported, set()).add(reporter) # {}로 딕셔너리 선언후 get으로 검색 및 Default 값 정해준후 값 삽입시 값 삽입 안됨.
+        # default dict으로 선언한 경우 get 아니고 인덱스로 값 검색!
+        d_reported[reported].add(reporter)
+
         # print(list(d_report)) 키만 출력
-    # print(list(d_reported.items()))  # (키,값) 형태로 배열 출력
+        # print(list(d_reported.items()))  # (키,값) 형태로 배열 출력
 
     # 1) 신고한사람 : 정지 당한 사람을 신고한 횟수
     d_report = defaultdict(int)
@@ -60,6 +68,18 @@ def solution_others(id_list: list, report: list, k: int) -> list:
     # 신고당한 사람만을 대상으로 신고당한 횟수를 체크하고, 정지 대상이면 유저 리스트에서 index를 찾아서 answer +=1
     for r in set(report):
         if reports[r.split()[1]] >= k:
-            answer[id_list.index(r.split[0])] += 1
+            answer[id_list.index(r.split()[0])] += 1
 
     return answer
+
+
+print(solution_others(
+    ["muzi", "frodo", "apeach", "neo"],
+    ["muzi frodo", "apeach frodo", "frodo neo", "muzi neo", "apeach muzi"],
+    2))
+
+print(solution_others(
+    ["con", "ryna"],
+    ["ryan con", "ryan con", "ryan con", "ryan con"],
+    3)
+)
