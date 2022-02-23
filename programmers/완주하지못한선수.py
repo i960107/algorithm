@@ -23,16 +23,15 @@ def solution(participants: list, completion: list) -> str:
     return [person for person in d.keys() if d[person] > 0][0]
 
 
-# print(solution(["leo", "kiki", "eden"], ["eden", "kiki"]))
-# print(solution(["marina", "josipa", "nikola", "vinko", "filipa"], ["josipa", "filipa", "marina", "nikola"]))
-# print(solution(["mislav", "stanko", "misalv", "ana"], ["mislav", "stanko", "ana"]))
+print(solution(["leo", "kiki", "eden"], ["eden", "kiki"]))
+print(solution(["marina", "josipa", "nikola", "vinko", "filipa"], ["josipa", "filipa", "marina", "nikola"]))
+print(solution(["mislav", "stanko", "misalv", "ana"], ["mislav", "stanko", "ana"]))
 
 
 def solution_others(participants: list, completion: list) -> str:
     '''Counter객체 사용하여 두 배열간 빼기'''
     answer = Counter(participants) - Counter(completion)
     # keys() keysView객체 반환. list로 타입캐스팅 필요.
-    print(answer)
     answer = list(answer.keys())[0]
     return answer
 
@@ -40,7 +39,3 @@ def solution_others(participants: list, completion: list) -> str:
 print(solution_others(["leo", "kiki", "eden"], ["eden", "kiki"]))
 print(solution_others(["marina", "josipa", "nikola", "vinko", "filipa"], ["josipa", "filipa", "marina", "nikola"]))
 print(solution_others(["mislav", "stanko", "misalv", "ana"], ["mislav", "stanko", "ana"]))
-
-a = [1, 2, 2, 3, 3, 3]
-b = [1, 2]
-print(Counter(a) - Counter(b))

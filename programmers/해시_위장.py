@@ -56,13 +56,11 @@ def solution_combinations(clothes: list) -> int:
     cnt = collections.Counter([type for _, type in clothes])
     #값은 상관없이. 의상의 종류 * 의상의종류별 의상의 수의 2차원 배열 필요.
     l = [[1] * (c + 1) for c in cnt.values()]
+    print(list(itertools.product(*l)))
     # 두개 이상의 리스트에서 모든 조합을 계산해야 한다면, product사용(단 unpacking한 1차원 배열을 매개변수로 넣어주어야함)
     #itertool.product(*l) -> 모든 조합을 담음 len(list(itertool.product(*l))) 보다는
     # product()의 결과 iterator의 원소의 개수만큼 1을 더해주는게 더 나은 방법
 
-    # 조합의 경우의 수 -1을 해주는 이유? 선택하지 않거나 선택하는 경우의 수가 각 배열의 길이가 됨. 즉 모두 안 입는 경우 포함.
-    print(l)
-    print(list(itertools.product(*l)))
     return sum(1 for _ in itertools.product(*l)) - 1
 
 
