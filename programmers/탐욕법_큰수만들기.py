@@ -4,12 +4,11 @@ def solution(number: str, k: int) -> str:
     # 모아진 숫자. 문자열은 immutable하기 때문에 list에 모으는게 나음.
     collected = []
 
-    #k개 만큼 다 뺏을때 그 위치부터 마지막 글자까지 지칭하기 위해 인덱스 필요
-    for i,num in enumerate(number):
-        while
+    # k개 만큼 다 뺏을때 그 위치부터 마지막 글자까지 지칭하기 위해 인덱스 필요
+    for i, num in enumerate(number):
+        pass
 
-
-    retrun answer
+    return answer
 
     # while k > 0 and curr <= len(num) - 1:
     #     while True:
