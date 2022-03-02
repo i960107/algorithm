@@ -16,7 +16,7 @@ def solution_zip(answers: list) -> list:
         if n3 == answer:
             cnt[2] += 1
 
-    print(f'solution_zip : {cnt}')
+    # print(f'solution_zip : {cnt}')
     max_count = max(cnt)
     return [i + 1 for i in range(len(cnt)) if cnt[i] == max_count]
 
@@ -36,7 +36,7 @@ def solution_index(answers: list) -> list:
         if answer == person3[idx % len(person3)]:
             cnt[2] += 1
 
-    print(f'solution_index : {cnt}')
+    # print(f'solution_index : {cnt}')
     return [i + 1 for i in range(len(cnt)) if cnt[i] == max(cnt)]
 
 
@@ -48,14 +48,38 @@ def solution_cycle(answers: list) -> list:
     return []
 
 
-print(solution_zip([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] * 1000))
-print(solution_index([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] * 1000))
+# print(solution_zip([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] * 1000))
+# print(solution_index([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] * 1000))
+#
+# print(solution_zip([1, 2, 3, 4, 5]))
+# print(solution_index([1, 2, 3, 4, 5]))
+#
+# print(solution_zip([1, 4, 2, 4, 2]))
+# print(solution_index([1, 4, 2, 4, 2]))
+#
+# print(solution_zip([]))
+# print(solution_index([]))
 
-print(solution_zip([1, 2, 3, 4, 5]))
-print(solution_index([1, 2, 3, 4, 5]))
 
-print(solution_zip([1, 4, 2, 4, 2]))
-print(solution_index([1, 4, 2, 4, 2]))
+def solution(answers: list) -> list:
+    p1 = [1, 2, 3, 4, 5] * (len(answers) // 5) + [1, 2, 3, 4, 5][:(len(answers) % 5)]
+    p2 = [2, 1, 2, 3, 2, 4, 2, 5] * (len(answers) // 8) + [2, 1, 2, 3, 2, 4, 2, 5][:len(answers) % 8]
+    p3 = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5] * (len(answers) // 10) + [3, 3, 1, 1, 2, 2, 4, 4, 5, 5][:len(answers) % 10]
 
-print(solution_zip([]))
-print(solution_index([]))
+    cnt = [0, 0, 0]
+
+    for i, answer in enumerate(answers):
+        if answer == p1[i]:
+            cnt[0] += 1
+        if answer == p2[i]:
+            cnt[1] += 1
+        if answer == p3[i]:
+            cnt[2] += 1
+    return [i + 1 for i in range(len(cnt)) if cnt[i] == max(cnt[0], cnt[1], cnt[2])]
+
+
+# print(solution([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] ))
+
+print(solution([1, 2, 3, 4, 5]))
+
+print(solution([1, 3, 2, 4, 2]))
