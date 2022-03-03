@@ -6,6 +6,7 @@ def solution(number: str, k: int) -> str:
     collected = []
 
     # k개 만큼 다 뺏을때 그 위치부터 마지막 글자까지 지칭하기 위해 인덱스 필요
+    # 문자열 바로 iterable처럼 순환 가능
     for i, num in enumerate(number):
         # 정수로 굳이 바꾸지 않아도 됨. 문자열 대소관계와 정수 대소관계 같음.
         while len(collected) > 0 and collected[-1] < num and k > 0:

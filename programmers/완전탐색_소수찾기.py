@@ -35,6 +35,7 @@ def solution(numbers: str) -> int:
     print(f'answer : {answer}')
     return len(set(answer))
 
+def solution(numbers: str) -> int:
 
 print(a[:-1])
 print(solution('17'))

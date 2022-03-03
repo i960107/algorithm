@@ -31,6 +31,13 @@ def get_divisor(num: int):
     return divisor
 
 
-print(solution(10, 2))
-print(solution(8, 1))
-print(solution(24, 24))
+# print(solution(10, 2))
+# print(solution(8, 1))
+# print(solution(24, 24))
+
+def solution2(brown:int,yellow:int)->list:
+    answer = []
+    return answer
+print(solution2(10, 2))
+print(solution2(8, 1))
+print(solution2(24, 24))
