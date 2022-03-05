@@ -29,4 +29,4 @@ class LinkedListQueue:
 queue = LinkedListQueue()
 queue.enqueue(1)
 queue.enqueue(2)
-print(queue.peek())
+# print(queue.peek())
