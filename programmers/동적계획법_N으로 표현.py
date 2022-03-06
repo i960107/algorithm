@@ -13,7 +13,9 @@ def solution(n: int, number: int) -> int:
         # set은 순서가 없기때문에 입력된 순서대로 저장되는 것 아님. 내부적으로 해시
         part = set()
         if i >= 1:
-            part.add(n * 11 * i)
+            # 이거 아님!!
+            # part.add(n * 11 * i)
+            part.add(int(str(n) * (i + 1)))
         else:
             part.add(n)
         # 1부터 n-1까지 부분해 조합해서 만들 수 있는 수
@@ -40,7 +42,7 @@ def solution(n: int, number: int) -> int:
                     return i + 1
 
         parts.append(part)
-        print(f'parts{i} {len(parts[i])}')
+        print(f'parts{i} {len(part)}')
     return -1
 
 
@@ -68,16 +70,16 @@ def solution_others(n: int, number: int) -> int:
         if number in s[i]:
             answer = i + 1
             break
-        print(f's[{i}] {len(s[i])}')
+        print(f'parts{i} {len(s[i])}')
     else:
         answer = -1
     return answer
 
 
-print(solution(5, 12))
+# print(solution(5, 12))
 print(solution(5, 31168))
-print(solution(2, 11))
+# print(solution(2, 11))
 
-print(solution_others(5, 12))
+# print(solution_others(5, 12))
 print(solution_others(5, 31168))
-print(solution_others(2, 11))
+# print(solution_others(2, 11))

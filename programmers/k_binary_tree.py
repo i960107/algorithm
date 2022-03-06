@@ -1,7 +1,10 @@
 from typing import Any
-#import 그대로 복사해오는 것이기 때문에 import한 파일도 실행되는 것과 같음.
-import h_linked_list_queue as queue
 
+
+# import 그대로 복사해오는 것이기 때문에 import한 파일도 실행되는 것과 같음.
+# import 한 파일안 import 되어있는 파일안 내용 쓰려면 import필요
+# h_linked_list_queue는 data만 저장하는 것으로 구현되어 있고 Node자체를 저장하지 못하므로 사용 불가.
+# import h_linked_list_queue as queue
 
 class Node:
     def __init__(self, item: Any):
@@ -90,15 +93,15 @@ class BinaryTree:
             return []
 
         traversal = []
-        q = queue.LinkedListQueue()
-        q.enqueue(self.root)
+        q = []
+        q.append(self.root)
 
-        while not q.isEmpty():
-            curr = q.dequeue()
+        while len(q) != 0:
+            curr = q.pop(0)
             if curr.left:
-                q.enqueue(curr.left)
+                q.append(curr.left)
             if curr.right:
-                q.enqueue(curr.right)
+                q.append(curr.right)
             traversal.append(curr.item)
         return traversal
 
