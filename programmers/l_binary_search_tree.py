@@ -39,7 +39,8 @@ class Node:
         else:
             return self, parent
 
-    def insert(self, key: int, item: Any = None):
+    def insert(self, key: Any, item: Any):
+
         if key < self.key:
             if self.left:
                 return self.left.insert(key, item)
@@ -287,12 +288,12 @@ class DoBinarySearchTree:
                 return False
             if key < node.key:
                 if node.left:
-                    add_node(node.left, key, value)
+                    return add_node(node.left, key, value)
                 else:
                     node.left = DoNode(key, value)
             else:
                 if node.right:
-                    add_node(node.right, key, value)
+                    return add_node(node.right, key, value)
                 else:
                     node.right = DoNode(key, value)
             # False 반환 되지 않고, 여기까지 왔다는건 재귀 호출 끝나고 삽입 된 후라는 뜻
@@ -312,7 +313,7 @@ class DoBinarySearchTree:
         # 매번 키값을 확인하거나 flag생성해두기
         is_left_child = False
 
-        #왜 재귀적 아니고 iterative version했을까
+        # 왜 재귀적 아니고 iterative version했을까
         while True:
             # 삭제할 키를 검색. 빈트리이거나 삭제할 키를 찾지 못하면 return False
             if not curr:
@@ -367,7 +368,7 @@ class DoBinarySearchTree:
 
         return True
 
-    def dump(self, reverse=False) -> None:
+    def dump(self, reverse=False) -> list:
         '''모든 노드를 키의 오름차순/내림차순으로 출력(inorder_traverse)'''
 
         # 재귀적으로 정의하려면 별도의 함수가 무조건 필요한가?
@@ -375,18 +376,19 @@ class DoBinarySearchTree:
         # get_subtree()의 경우에는 재귀적으로 밑에 트리부터 올라와야하기 때문에 node를 매개변수로 받아야함
         # 따라서 별도의 함수 필요
         # inner function에서는 self 매개변수로 넘기지 않음
-        def print_subtree(node: DoNode) -> None:
+        def print_subtree(node: DoNode) -> list:
             '''node를 루트로 하는 서브트리(자신 포함)의 노드를 키의 오름차순 출력 (key value) 형식'''
             # 빈 트리 처리
+            l = []
             if node:
                 # 동기적으로 일어나므로 오름차순 출력됨. 왼쪽 서브트리 모두 출력되고 난 후->자신->오른쪽 서브트리 출력됨
                 # node.left 확인하지 않아도 됨. 호출된 함수 안에서 체크하기 때문
-                print_subtree(node.left)
-                print(f'{node.key} {node.value}')
-                print_subtree(node.right)
+                l += print_subtree(node.left)
+                l.append(node.key)
+                l += print_subtree(node.right)
+            return l
 
-        def print_subtree_reverse(node: DoNode) -> None:
-            # 왜 9가 빠지지?
+        def print_subtree_reverse(node: DoNode) -> list:
             '''node를 루트로 하는 서브트리(자신 포함)의 노드를 키의 내림차순 출력 (key value) 형식'''
             if node:
                 print_subtree_reverse(node.right)
@@ -399,11 +401,11 @@ class DoBinarySearchTree:
 
         if self.root:
             if not reverse:
-                print_subtree(self.root)
+                return print_subtree(self.root)
             else:
-                print_subtree_reverse(self.root)
+                return print_subtree_reverse(self.root)
         else:
-            print([])
+            return []
 
     def min_key(self) -> Any:
         '''최소 키를 반환'''
@@ -426,8 +428,9 @@ dbst.add(10, '예지')
 dbst.add(5, '동혁')
 dbst.add(12, '원준')
 dbst.add(14, '민서')
+print(dbst.add(14, '민서'))
 print(f'이 키를 갖는 값은 {dbst.search(5)} 입니다')
-dbst.dump()
+print(dbst.dump())
 dbst.remove(10)
 dbst.dump(reverse=True)
 print(f'키의 최솟값은 {dbst.min_key()}')
