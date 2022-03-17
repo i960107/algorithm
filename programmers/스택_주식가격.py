@@ -17,6 +17,7 @@ def solution_others(prices: list) -> list:
     answer = [0] * len(prices)
     stack = []
 
+    # stack에 인덱스와 값을 같이 쌓거나, 인덱스만 쌓아서 인덱스로 참조하거나
     for i, price in enumerate(prices):
         # 마지막 원소 pop()하면 if stack -> Falsy됨
         # python falsy : None, [],(),{},"" 즉 빈 iterable,0
@@ -38,10 +39,29 @@ def solution_others(prices: list) -> list:
     return answer
 
 
-list = [1, 2, 3, 2, 3, ]
+def solution_practice(prices: list) -> list:
+    answer = [0] * len(prices)
+
+    stack = []
+    for i, ip in enumerate(prices):
+        while stack and stack[-1][1] > ip:
+            j, jp = stack.pop()
+            answer[j] = i - j
+        stack.append((i, ip))
+
+    while stack:
+        i, ip = stack.pop()
+        answer[i] = len(prices) - 1 - i
+
+    return answer
+
+
+list = [1, 2, 3, 2, 3]
 print(solution(list))
 print(solution_others(list))
+print(solution_practice(list))
 
 list = [4, 3, 2, 4, 3, 1, 2]
 print(solution(list))
 print(solution_others(list))
+print(solution_practice(list))

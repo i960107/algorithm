@@ -1,4 +1,5 @@
 from collections import Counter
+from collections import defaultdict
 
 
 def solution(participants: list, completion: list) -> str:

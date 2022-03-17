@@ -1,3 +1,6 @@
+from collections import deque
+
+
 def solution(bridge_length: int, weight: int, truck_weights: list) -> int:
     sec = 0
 
@@ -94,6 +97,58 @@ def solution2(bridge_length: int, weight: int, truck_weights: list) -> int:
     return sec
 
 
-print(solution2(2, 10, [7, 4, 5, 6]))
-print(solution2(100, 100, [10]))
-print(solution2(100, 100, [10, 10, 10, 10, 10, 10, 10, 10]))
+def solution_deque(bridge_length: int, weight: int, truck_weights: list) -> int:
+    '''deque을 활용한 풀이'''
+    bridge = deque(0 for _ in range(bridge_length))
+    total_weight = 0
+    step = 0
+    # pop()하는 시간 줄이기 위해 reverse 복잡도 O(n)
+    truck_weights.reverse()
+
+    while truck_weights:
+        total_weight -= bridge.popleft()
+        if total_weight + truck_weights[-1] <= weight:
+            truck = truck_weights.pop()
+            bridge.append(truck)
+            total_weight += truck
+        else:
+            bridge.append(0)
+        step += 1
+
+    step += bridge_length
+    return step
+
+
+def solution_test(bridge_length: int, weight: int, truck_weights: list) -> int:
+    sec = 0
+    bridge = [0] * bridge_length
+    bridge_front = 0
+    bridge_rear = bridge_length - 1
+    truck_index = 0
+    # 시간이 오래 걸리는 이유는 sum() 때문 -> 무게를 추적하고 있는게 더 나음!!
+
+    while True:
+        sec += 1
+
+        # 다리 앞에 도착해서 내린 트럭 조정
+        bridge[bridge_front] = 0
+        bridge_front = (bridge_front + 1) % bridge_length
+
+        # 다리 끝에 올라가는 트럭 조정
+        bridge_rear = (bridge_rear + 1) % bridge_length
+        if weight - sum(bridge) >= truck_weights[truck_index]:
+            bridge[bridge_rear] = truck_weights[truck_index]
+            truck_index += 1
+
+        # 더 이상 기다리는 트럭이 없을때 (모든 트럭이 다리를 건너거나 다리 위에 있음)
+        if truck_index > len(truck_weights) - 1:
+            break
+
+    sec += bridge_length
+
+    return sec
+
+
+print(solution_test(2, 10, [7, 4, 5, 6]))
+print(solution_test(100, 100, [10]))
+print(solution_test(100, 100, [10, 10, 10, 10, 10, 10, 10, 10, 10, 10]))
