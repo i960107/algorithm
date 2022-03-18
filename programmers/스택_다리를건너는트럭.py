@@ -152,3 +152,5 @@ def solution_test(bridge_length: int, weight: int, truck_weights: list) -> int:
 print(solution_test(2, 10, [7, 4, 5, 6]))
 print(solution_test(100, 100, [10]))
 print(solution_test(100, 100, [10, 10, 10, 10, 10, 10, 10, 10, 10, 10]))
+
+
