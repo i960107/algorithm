@@ -29,7 +29,7 @@ def solution_for(my_list: list) -> list:
     '''방법1 - for 문 사용'''
     answer = []
     for element in my_list:
-        answer.append(element)
+        answer += (element)
     return answer
 
 

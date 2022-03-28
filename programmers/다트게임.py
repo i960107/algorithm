@@ -71,3 +71,4 @@ print(solution_others("1S*2T*3S"))
 print(solution_others("1D#2S*3S"))
 print(solution_others("1T2D3D#"))
 print(solution_others("1D2S3T*"))
+

@@ -97,6 +97,7 @@ def solution_common_multiple(arr: List[int]) -> int:
     # 최소공배수 (A*B)/GCD
     # 정렬 후 가장 큰 값의 배수를 확인하기
     arr.sort()
+    answer = 0
     n = 1
     while True:
         curr = arr[-1] * n
@@ -105,5 +106,80 @@ def solution_common_multiple(arr: List[int]) -> int:
     return answer
 
 
-print(solution_common_multiple([2, 6, 8, 14]))
-print(solution_common_multiple([1, 2, 3]))
+# print(solution_common_multiple([2, 6, 8, 14]))
+# print(solution_common_multiple([1, 2, 3]))
+
+
+def solution_candidate_key(relation: list) -> int:
+    unique = 0
+    non_unique = {}
+
+    for i in range(len(relation[0])):
+        counter = Counter(relation[j][i] for j in range(len(relation)))
+        # 중복된 원소가 있을때
+        if len(counter) != len(relation):
+            # 고유키가 아닌 키들과 복합키가 기본키가 될 수 있는지 살피기
+            non_unique[i] = [key for key in counter if counter[key] > 1]
+        # 중복된 원소가 없을때
+        else:
+            unique += 1
+
+    # 중복된 컬럼들끼리 복합키가 후보키 될 수 있을지 검사
+    # non_unique 배열은 오름차순 정렬된 상태. 자기 보다 뒤 키만 확인하면 됨.
+    # 확인하고 기본키 가능하면 두개 배열에서 제거하기
+    # 중복값 검사!!
+    # 세개 합쳐서 복합키 될 수도 있음. 어떻게 검사하지?
+    for i in non_unique:
+        for j in non_unique:
+            counter = Counter(relation[k][i] + relation[k][j] for k in range(len(relation))
+                              if relation[k][i] in non_unique[i])
+            if all(v <= 1 for v in counter.values()):
+                unique += 1
+    return unique
+
+
+print(solution_candidate_key(
+    [["100", "ryan", "music", "2"],
+     ["200", "apeach", "math", "2"],
+     ["300", "tube", "computer", "3"],
+     ["400", "con", "computer", "4"],
+     ["500", "muzi", "music", "3"],
+     ["600", "apeach", "music", "2"]]))
+
+
+def solution_fibo_iterative(n: int) -> int:
+    fibo = 0
+    f0 = 0
+    f1 = 1
+    curr = 1
+
+    while curr < n:
+        fibo = f0 + f1
+        curr += 1
+        f0, f1 = f1, fibo
+    return fibo % 1234567
+
+
+def solution_fibo_others(n: int) -> int:
+    # a : before, b:curr
+    a, b = 0, 1
+
+    for i in range(n):
+        # n ==2 이면 두번 수행
+        # 첫번째 수행 a, b = 1,1
+        # 두번째 수행 a, b = 1,2
+        a, b = b, a + b
+    return a % 1234567
+
+
+def solution_fibo_recursive(n: int) -> int:
+    fibo = 0
+    f1 = 0
+    f2 = 1
+    return fibo % 1234567
+
+
+print(solution_fibo_iterative(3))
+print(solution_fibo_iterative(5))
+print(solution_fibo_recursive(3))
+print(solution_fibo_recursive(5))
