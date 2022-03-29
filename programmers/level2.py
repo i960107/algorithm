@@ -2,19 +2,6 @@ from typing import List
 from collections import Counter
 
 
-def solution_124_country(n: int) -> int:
-    '''124나라의 숫자'''
-    numbers = ['1', '2', '4']
-    answer = ''
-    group, order = (n - 1) // 3, (n - 1) % 3
-    answer += numbers[order]
-    return answer
-
-
-print(solution_124_country(1))
-print(solution_124_country(2))
-print(solution_124_country(3))
-print(solution_124_country(4))
 
 
 def solution_tuple(s: str) -> List[int]:
