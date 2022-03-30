@@ -97,42 +97,6 @@ def solution_common_multiple(arr: List[int]) -> int:
 # print(solution_common_multiple([1, 2, 3]))
 
 
-def solution_candidate_key(relation: list) -> int:
-    unique = 0
-    non_unique = {}
-
-    for i in range(len(relation[0])):
-        counter = Counter(relation[j][i] for j in range(len(relation)))
-        # 중복된 원소가 있을때
-        if len(counter) != len(relation):
-            # 고유키가 아닌 키들과 복합키가 기본키가 될 수 있는지 살피기
-            non_unique[i] = [key for key in counter if counter[key] > 1]
-        # 중복된 원소가 없을때
-        else:
-            unique += 1
-
-    # 중복된 컬럼들끼리 복합키가 후보키 될 수 있을지 검사
-    # non_unique 배열은 오름차순 정렬된 상태. 자기 보다 뒤 키만 확인하면 됨.
-    # 확인하고 기본키 가능하면 두개 배열에서 제거하기
-    # 중복값 검사!!
-    # 세개 합쳐서 복합키 될 수도 있음. 어떻게 검사하지?
-    for i in non_unique:
-        for j in non_unique:
-            counter = Counter(relation[k][i] + relation[k][j] for k in range(len(relation))
-                              if relation[k][i] in non_unique[i])
-            if all(v <= 1 for v in counter.values()):
-                unique += 1
-    return unique
-
-
-print(solution_candidate_key(
-    [["100", "ryan", "music", "2"],
-     ["200", "apeach", "math", "2"],
-     ["300", "tube", "computer", "3"],
-     ["400", "con", "computer", "4"],
-     ["500", "muzi", "music", "3"],
-     ["600", "apeach", "music", "2"]]))
-
 
 def solution_fibo_iterative(n: int) -> int:
     fibo = 0

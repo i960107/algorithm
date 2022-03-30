@@ -34,7 +34,7 @@ from typing import Tuple
 
 
 def solution_124_country(n: int) -> Tuple[int, int]:
-    
+
 
     return group, order
 
