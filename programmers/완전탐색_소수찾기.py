@@ -35,10 +35,33 @@ def solution(numbers: str) -> int:
     print(f'answer : {answer}')
     return len(set(answer))
 
-def solution(numbers: str) -> int:
 
-print(a[:-1])
+def solution_practice(numbers: str) -> int:
+    nums = set()
+    answer = set()
+    for i in range(1, len(numbers) + 1):
+        # 1이 제외되어야함.
+        for x in permutations(numbers, i):
+            curr = int(''.join(x))
+            nums.add(curr)
+
+    print(f'per_list : {nums}')
+    for curr in nums:
+        if curr < 2:
+            continue
+        for num in range(2, int(sqrt(curr)) + 1):
+            if curr % num == 0:
+                break
+        else:
+            answer.add(curr)
+    print(f'answer : {answer}')
+    return len(answer)
+
+
 print(solution('17'))
-print(solution('011'))
+print(solution_practice('17'))
 
-#에라토스테네스의 체?
+print(solution('011'))
+print(solution_practice('011'))
+
+# 에라토스테네스의 체?

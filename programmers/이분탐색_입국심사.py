@@ -39,3 +39,6 @@ def solution_others(n: int, times: list) -> int:
 
 
 print(solution_others(6, [7, 10]))
+
+# set1 = set([1, 2, 2, 1]) set2 = set([2, 2])
+# print(set1.intersection(set2))

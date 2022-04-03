@@ -269,3 +269,68 @@ def solution_prime_numbers_others(n: int) -> int:
 
 print(solution_prime_numbers(10))
 print(solution_prime_numbers(5))
+
+
+def solution(lottos: List[int], win_nums: List[int]) -> List[int]:
+    '''로또의 최고 순위와 최저 순위'''
+    rank = [6, 6, 5, 4, 3, 2, 1]
+
+    # 리스트 아닌 dict형 사용한 이유. 내부적으로 hash function으로 구현되어 있기 때문에 탐색이 O(1)
+    # hash function이란 key에 대해서 하나의 숫자를 만들어냄. 그 숫자가 위치가 됨
+    count = 0
+    d_num = {}
+
+    # 정렬을 한다? O(NlogN)으로 더 복잡해짐
+    for num in lottos:
+        d_num[num] = d_num.get(num, 0) + 1
+
+    for num in win_nums:
+        if d_num.get(num, 0) == 1:
+            count += 1
+
+    return [rank[count + d_num.get(0, 0)], rank[count]]
+
+
+print(solution([44, 1, 0, 0, 31, 25], [31, 10, 45, 1, 6, 19]))
+print(solution([0, 0, 0, 0, 0, 0], [38, 19, 20, 40, 15, 25]))
+print(solution([45, 4, 35, 20, 3, 9], [20, 9, 3, 45, 4, 35]))
+
+
+def solution(new_id: str) -> str:
+    '''신규 아이디 추천'''
+    # 신규 유저가 입력한 아이디가 카카오 아이디 규칙에 맞는 지 검사하고 규칙에 맞지 않는 경우
+    # 규칙에 맞는 새로운 아이디를 추천
+    # 아이디 검사 후 변형하는게 아니라 각 경우마다 해당하면 변형하는걸로
+    # 원래 규칙이 맞았다면 변형되지 않음
+    answer = ""
+
+    # 1,2,3,4 단계
+    for i, char in enumerate(new_id.lower()):
+        # 앞에 조건 해당하면 뒤의 조건 검사하지 않음
+        if char.isalnum() or char in ('-', '_'):
+            answer += char
+        elif char == '.':
+            # 맨 앞에 .이 오거나 연속인 경우 제외
+            if answer and answer[-1] != char:
+                answer += char
+
+    # 4단계 중 뒤에 .이 오는 경우, pop() 은 O(1)
+    answer = answer.rstrip(".")
+
+    # 5단계
+    answer = answer if answer else "a"
+
+    # 6단계
+    answer = answer[:15].rstrip(".") if len(answer) >= 16 else answer
+
+    # 7단계
+    answer = answer + answer[-1] * (3 - len(answer)) if len(answer) <= 2 else answer
+
+    return answer
+
+
+print(solution("...!@BaT#*..y.abcdefghijklm"))
+print(solution("z-+.^."))
+print(solution("=.="))
+print(solution("123_.def"))
+print(solution("abcdefghijklmn.p"))

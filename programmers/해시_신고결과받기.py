@@ -1,4 +1,5 @@
 from collections import defaultdict
+from typing import List
 
 
 def solution(id_list: list, report: list, k: int) -> list:
@@ -62,6 +63,8 @@ def solution_others(id_list: list, report: list, k: int) -> list:
 
     # report 배열이 신고한 사람 신고당한 사람 1:1 문자열을 담고 있기 때문에
     # report 배열 자체를 set으로 만들어서 중복을 제거해줄 수 있음.
+    # O(N)
+    # list ot set : O(N)
     for r in set(report):
         reports[r.split()[1]] += 1
 
@@ -73,13 +76,32 @@ def solution_others(id_list: list, report: list, k: int) -> list:
     return answer
 
 
-print(solution_others(
+def solution_practice(id_list: List[str], report: List[str], k: int) -> List[int]:
+    answer = [0] * len(id_list)
+    d_users = {user: idx for idx, user in enumerate(id_list)}
+    d_reported = defaultdict(set)
+
+    for r in report:
+        reporter, reported = r.split()
+        reporter, reported = d_users[reporter], d_users[reported]
+        d_reported[reported].add(reporter)
+
+    # d_reported.items() -> O(N)
+    # 사람 자체가 아니라 count만 하면 공간 복잡도 낮음
+    for reported, reporters in d_reported.items():
+        if len(reporters) >= k:
+            for user in reporters:
+                answer[user] += 1
+    return answer
+
+
+print(solution_practice(
     ["muzi", "frodo", "apeach", "neo"],
     ["muzi frodo", "apeach frodo", "frodo neo", "muzi neo", "apeach muzi"],
     2))
 
-print(solution_others(
-    ["con", "ryna"],
+print(solution_practice(
+    ["con", "ryan"],
     ["ryan con", "ryan con", "ryan con", "ryan con"],
     3)
 )
