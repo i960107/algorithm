@@ -26,6 +26,7 @@ def two_sum_two_pointer(numbers: List[int], target: int) -> List[int] | None:
     # O(n)
     left, right = 0, len(numbers) - 1
     # left== right면 ? return None
+    # 작으면 왼쪽 포인터 옮기고, 크면 오른쪽 포인터 옮기기
     while not left == right:
         if numbers[left] + numbers[right] < target:
             left += 1
