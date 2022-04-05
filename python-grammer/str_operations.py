@@ -1,3 +1,4 @@
+import collections
 import string
 from collections import deque
 from collections import Counter
@@ -94,6 +95,7 @@ def is_palindrome_arr(s: str) -> bool:
 def is_palindrome_deque(s: str) -> bool:
     '''데크를 이용한 팰린드론 판단'''
     strs: Deque = deque()
+    s = deque(s)
 
     for char in s:
         if char.isalnum():
@@ -127,6 +129,9 @@ def reverse_string_pointer(l: list) -> list:
 
     return l
 
+
+d = collections.Counter()
+d.most_common(1)
 
 print(reverse_string_pointer(["h", "e", "l", "l", "o"]))
 
@@ -162,24 +167,12 @@ def most_common_word(paragraph: str, banned: list) -> str:
 print(most_common_word("Bob hit a ball, the hit BALL flew far after it was hit.", ["hit"]))
 
 
-def group_anagrams(strs: list) -> list:
-    '''그룹 애너그램'''
-    anagrams = defaultdict(list)
-    for word in strs:
-        # 정렬하여 딕셔너리에 추가
-        # 애너그램 그룹인 경우 같은 알파벳으로 이루어져있기 때문에 정렬된 결과 같음₩
-        # key는 문자열이여야함? list는 Type Error:unhashable type 발생
-        anagrams[sorted(word)].append(word)
-    return [words for words in anagrams.values()]
-
-
-print(group_anagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
-
-
 def longest_palindrome_substring(s: str) -> str:
     '''가장 긴 팰린드롬 부분 문자열을 출력하라'''
 
     # 투 포인터가 중앙을 중심으로 확장. 슬라이딩 윈도우처럼 이동
+    # 2칸, 3칸으로 구성된 투 포인터가 슬라이딩 윈도우처럼 계속 앞으로 전진해간다.
+    # 홀수 3칸과 짝수 2칸의 2개 포인터가 계속 우측으로 이동하다.
     # 팰린드롬 판별 및 투 포인터 확장
     def expand(left: int, right: int) -> str:
         while left >= 0 and right < len(s) and s[left] == s[right]:
@@ -195,3 +188,41 @@ def longest_palindrome_substring(s: str) -> str:
     for i in range(len(s) - 1):
         result = max(result, expand(i, i + 1), expand(i, i + 2), key=len)
     return result
+
+
+def group_anagrams(strs: List[str]) -> List[List[str]]:
+    '''그룹 애너그램'''
+    groups = defaultdict(list)
+    for s in strs:
+        groups[''.join(sorted(s))].append(s)
+    return [value for _, value in groups.items()]
+
+
+print(group_anagrams(strs=["eat", "tea", "tan", "ate", "nat", "bat"]))
+print(group_anagrams(strs=[""]))
+print(group_anagrams(strs=["a"]))
+
+
+def longest_palindrome(s: str) -> str:
+    # 최적화. 예외처리. 해당하지 않을때 빠르게 return
+    if len(s) < 2 or s == s[::-1]:
+        return s
+
+    def expand(left: int, right: int) -> str:
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            left -= 1
+            right -= 1
+        # left, right 포함하지 않는 범위가 팰린드롬에 해당
+        return s[left + 1:right]
+
+    result = ''
+    # 가장 마지막 두개 글자가 팰린드롬인 경우 확인
+    for i in range(len(s) - 1):
+        result = max(result, expand(i, i + 1), expand(i, i + 2), key=len)
+
+    return result
+
+
+# print(longest_palindrome("babad"))
+print(longest_palindrome("bb"))
+print(longest_palindrome("ab"))

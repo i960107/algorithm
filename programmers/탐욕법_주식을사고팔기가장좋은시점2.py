@@ -11,11 +11,12 @@ def solution(prices: List[int]) -> int:
     return answer
 
 
-def solution_others(prices: List[int]) -> int:
+def solution_pythonic(prices: List[int]) -> int:
     answer = 0
     # 내리기 전에 팔고 오르기 전에 산다
     # 계속 오르는 경우라도 몇 번이든 사고팔 수 있기 때문에, 매번 단계마다 이익을 취하는 탐용 구조로 구현할 수 있음
-    return answer
+    # 매번 이익이 0보다 크면 무조건 합산
+    return sum(max(prices[i + 1] - prices[i], 0) for i in range(len(prices) - 1))
 
 
 print(solution([7, 1, 5, 3, 6, 4]))

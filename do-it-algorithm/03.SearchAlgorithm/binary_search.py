@@ -18,6 +18,25 @@ def bin_search(a: Sequence, key: Any):
     raise ValueError
 
 
+def bin_search_test(a: Sequence, key: Any) -> int:
+    answer = 0
+    l, u = 0, len(a) - 1
+    while l <= u:
+        mid = l + (u - l) // 2
+        if a[mid] < key:
+            l = mid + 1
+        elif a[mid] > key:
+            u = mid - 1
+        else:
+            return mid
+
+    return -1
+
+
+print(bin_search([1, 2, 3, 4], 4))
+print(bin_search_test([1, 2, 3, 4], 4))
+
+
 if __name__ == '__main__':
     num = int(input(f'원소 수를 입력하세요 :'))
     x = [None] * num
