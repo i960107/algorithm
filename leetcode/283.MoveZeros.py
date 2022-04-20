@@ -24,6 +24,7 @@ def move_zeros_optimal(nums: [List[int]]) -> None:
     for curr in range(len(nums)):
         # 0을 모두 앞으로 보내고 싶다면!
         # if nums[curr] == 0:
+        # 어떻게 last non zero 앞은 다 non zero가 되지? 
         if nums[curr] != 0:
             # fill the current position by 0 right away,so we don't need to come back
             nums[last_none_zero], nums[curr] = nums[curr], nums[last_none_zero]

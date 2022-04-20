@@ -1,7 +1,7 @@
 from typing import List
 
 
-def searchInsert(self, nums: List[int], target: int) -> int:
+def searchInsert( nums: List[int], target: int) -> int:
     l, u = 0, len(nums) - 1
 
     while l <= u:
@@ -16,5 +16,6 @@ def searchInsert(self, nums: List[int], target: int) -> int:
 
 
 print(searchInsert(nums=[1, 3, 5, 6], target=5))
+print(searchInsert(nums=[1, 3, 5, 6], target=0))
 print(searchInsert(nums=[1, 3, 5, 6], target=2))
-print(searchInsert(nums = [1, 3, 5, 6], target = 7))
+print(searchInsert(nums=[1, 3, 5, 6], target=7))
