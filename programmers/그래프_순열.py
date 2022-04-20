@@ -8,12 +8,13 @@ def permute_fail(nums: List[int]) -> List[List[int]]:
             answer.append(path)
             return
 
+        # 자기 원소 뒤에서만 탐색 -> 전체 원소를 포함하는 순열을 구해야함
         for i in range(index, len(nums)):
-            # path 공유되는 문제가 있음...
             path = path + [i]
             dfs(index + 1, path)
 
     answer = []
+
     if not nums:
         return answer
 
@@ -27,10 +28,10 @@ def permute(nums: List[int]) -> List[List[int]]:
     prev_elements = []
 
     def dfs(elements):
-        # 리프 노드일때 결과 추가
+        # 리프 노드일때 결과 추가. elements의 개수가 0이라면 혹은 path의 길이가 nums와 같다면
         if len(elements) == 0:
             result.append(prev_elements[:])
-            # list slicing하는 것과 어떻게 다르지?
+            # list slicing하는 것과 어떻게 다르지? list slicing 문법임
             # 결과 값이 추가되는 게 아니라rev_elements에 대한 참조가 추가되며, 참조된 값이 변경될 경우 같이 바뀌게 된다.
             # result.append(prev_elements)
 
@@ -49,15 +50,6 @@ def permute(nums: List[int]) -> List[List[int]]:
     dfs(nums)
     return result
 
-def test(nums: List[int]) -> List[List[int]]:
-    answer= []
-    def dfs(path:List[int]):
-        if len(path) == len(nums):
-            answer.append(path[:])
-            return
-        for i in range(len(nums)):
-    dfs([])
-    return answer
 
 def itertools_permute(nums: List[int]) -> List[List[int]]:
     # 코딩 테스트시에 활용한다면, 구현의 효율성, 성능을 위해 사용했따는 설명을 달아두기!

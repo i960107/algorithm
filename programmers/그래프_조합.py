@@ -1,3 +1,4 @@
+import itertools
 from typing import List
 
 
@@ -5,6 +6,7 @@ def solution_mine(n: int, k: int) -> List[List[int]]:
     # 책에서 예시 output 출력 순서가 왜 저렇게 되지?
     result = []
     path = []
+    # list 만들어 둘 필요 없음
     numbers = [i + 1 for i in range(n)]
 
     def dfs(index: int):

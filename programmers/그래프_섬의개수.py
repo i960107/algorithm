@@ -34,34 +34,6 @@ def get_number_of_island(grid: List[List[str]]) -> int:
     return count
 
 
-def solution_test(grid: List[List[str]]) -> int:
-    answer = 0
-
-    # 언제 count 증가시킬지가 문제군!
-    def dfs(r: int, c: int):
-        if grid[r][c] == "0":
-            return
-        grid[r][c] = "0"
-        if r - 1 >= 0:
-            dfs(r - 1, c)
-        if r + 1 < len(grid):
-            dfs(r + 1, c)
-        if c - 1 >= 0:
-            dfs(r, c - 1)
-        if c + 1 < len(grid[r]):
-            dfs(r, c + 1)
-
-    if not grid:
-        return answer
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
-            # 이미 탐색한 곳이면 값이 0
-            if grid[i][j] == "1":
-                dfs(i, j)
-                answer += 1
-    return answer
-
-
 print(get_number_of_island(None))
 print(get_number_of_island(grid=[
     ["1", "1", "1", "1", "0"],
