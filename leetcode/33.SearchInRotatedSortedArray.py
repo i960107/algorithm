@@ -27,6 +27,20 @@ def search(nums: List[int], target: int) -> int:
     return -1
 
 
+def search_insertion_position(nums: List[int], target: int) -> int:
+    l, u = 0, len(nums) - 1
+    while l <= u:
+        mid = l + (u - l) // 2
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < target:
+            l = mid + 1
+        else:
+            u = mid - 1
+    # u + 1
+    return l
+
+
 print(search(nums=[4, 5, 6, 7, 0, 1, 2], target=0))
 print(search(nums=[4, 5, 6, 7, 0, 1, 2], target=3))
 print(search(nums=[1], target=0))

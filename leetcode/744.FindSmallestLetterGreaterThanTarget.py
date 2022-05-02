@@ -18,9 +18,22 @@ def nextGreatestLetter(letters: List[str], target: str) -> str:
 
 
 def nextGreatestLetter2(letters: List[str], target: str) -> str:
+    # 중복되는 값이 여러개 있다면 맨 오른쪽 인덱스
+    # bisect_right는 원소가 있다면 그 다음잉니깐 삽입하는 위치니깐 letters[index] == target인 경우 없겠군
+    # bisect_left는 원소가 있다면 그 첫 위치니깐 letters[index] == target인 경우 있음
     index = bisect.bisect_right(letters, target)
+    # 꼭 필요할때만 연산하고 아니면 바로 참조해서 속도 빠르게 할 수 있음
     return letters[index % len(letters)]
 
+
+# 찾는 원소가 중복되어 들어있을때
+print(nextGreatestLetter2(["a", "b", "b", "f"], "b"))
+# 찾는 원소가 마지막 원소일때
+print(nextGreatestLetter2(["a", "b", "b", "f"], "f"))
+# 찾는 원소가 없을때
+print(nextGreatestLetter2(["a", "b", "b", "f"], "i"))
+# 찾는 원소가 없고 답이 맨 처음 원소일때
+print(nextGreatestLetter2(["x", "y"], "i"))
 
 print(nextGreatestLetter(letters=["a", "b"], target="r"))
 print(nextGreatestLetter(letters=["c", "f", "j"], target="a"))
