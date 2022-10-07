@@ -19,6 +19,7 @@ class FenceReparing:
         if last_index < 0:
             return 0
 
+        # memo[0] 값은 업데이트 되지 않음
         elif last_index == 0:
             return 1
 
