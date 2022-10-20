@@ -26,30 +26,33 @@ from typing import List
 #     print(dp)
 #     return max(dp[-1])
 
-def solution(arr: List[str]) -> int:
-    dp = [{0}]
+# def solution(arr: List[str]) -> int:
+#     dp = [{0}]
+#
+#     for i in range(len(arr) - 2, 0, -2):
+#
+#         if arr[i] == "+":
+#             s = set()
+#             for x in dp[-1]:
+#                 s.add(int(arr[i + 1]) + x)
+#             dp.append(s)
+#         else:
+#             s = set()
+#             for x in dp[-1]:
+#                 s.add(- int(arr[i + 1]) + x)
+#                 s.add(- int(arr[i + 1]) - x)
+#             dp.append(s)
+#
+#     answer = -1 * 1000 * 101 - 1
+#     print(dp)
+#     for x in dp[-1]:
+#         answer = max(x + int(arr[0]), answer)
+#
+#     return max(dp[-1])
+#
 
-    for i in range(len(arr) - 2, 0, -2):
 
-        if arr[i] == "+":
-            s = set()
-            for x in dp[-1]:
-                s.add(int(arr[i + 1]) + x)
-            dp.append(s)
-        else:
-            s = set()
-            for x in dp[-1]:
-                s.add(- int(arr[i + 1]) + x)
-                s.add(- int(arr[i + 1]) - x)
-            dp.append(s)
-
-    answer = -1 * 1000 * 101 - 1
-    print(dp)
-    for x in dp[-1]:
-        answer = max(x + int(arr[0]), answer)
-
-    return max(dp[-1])
-
-
+def solution(arr:List[str]) -> int:
+    pass
 print(solution(["1", "-", "3", "+", "5", "-", "8"]))
 print(solution(["5", "-", "3", "+", "1", "+", "2", "-", "4"]))

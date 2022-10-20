@@ -49,3 +49,4 @@ signB = list(map(int, input().split()))
 
 ac = AhChoo(n, signA, signB)
 print(ac.get_min_distance(n - 1, n - 1))
+
