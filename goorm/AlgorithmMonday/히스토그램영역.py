@@ -1,21 +1,17 @@
 from typing import List
 
 
-def get_dp(n, m) -> List[int]:
-    dp = [0] * len(arr)
-    dp[0] = arr[0]
-    for i in range(1, len(dp)):
-        if arr[i - 1] < arr[i]:
-            dp[i] = arr[i - 1]
-        else:
-            dp[i] = arr[i]
-
-    return dp
-
-
 def solution(histogram: List[int]) -> int:
-    dp = get_dp(histogram)
-    print(dp)
+    stack = []
+    answer = [0] * len(histogram)
+    # 내림차순 정렬해 보자
+    for index, height in enumerate(histogram):
+        while stack and histogram[stack[-1]] < height:
+            max_index = stack.pop()
+            max_height = histogram[max_index]
+        answer[index] = max(answer[index], height, stack[-1])
+
+
     return 0
 
 

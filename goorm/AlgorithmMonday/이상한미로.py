@@ -26,7 +26,7 @@ def solution(n: int, rooms: List[int], adj: Dict[int, List[Tuple[int]]]):
 
         for next, distance in adj[curr.node]:
             if curr.remainder != -1 and next % rooms[curr.node - 1] != curr.remainder:
-                continue
+               continue
             bfs_queue.append(State(next, next % rooms[curr.node - 1], curr.acc_distance + distance))
 
             if next == n:
