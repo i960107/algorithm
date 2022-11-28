@@ -34,6 +34,6 @@ def simulate_tax_policy(money: int, min_ratio: int, max_ratio: int, rank_size: i
     return int(money)
 
 
-print(simulate_tax_policy(12345678, 10, 20, 250000, 10000000, 4))
-print(simulate_tax_policy(1000000000, 50, 99, 100000, 0, 6))
-print(simulate_tax_policy(123456789, 0, 0, 1, 0, 360))
+print(tax_simulation(12345678, 10, 20, 250000, 10000000, 4))
+print(tax_simulation(1000000000, 50, 99, 100000, 0, 6))
+print(tax_simulation(123456789, 0, 0, 1, 0, 360))

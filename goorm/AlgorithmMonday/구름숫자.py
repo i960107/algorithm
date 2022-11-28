@@ -12,18 +12,14 @@ def solution(n: int, goorm_numbers: str) -> int:
         "ze": "0",
     }
 
-    i = 0
     answer = []
-    while i < n - 1:
+    for i in range(len(goorm_numbers) - 1):
         curr = goorm_numbers[i:i + 2]
         if curr in d:
             answer.append(d[curr])
-        i += 1
-
     return int(''.join(answer))
 
-    pass
 
-
-print(solution(4, "qwer"))
-print(solution(10, "sdweasweas"))
+n = int(input())
+goorm_numbers = input()
+print(solution(n, goorm_numbers))

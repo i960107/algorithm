@@ -19,7 +19,7 @@ def get_consecutive_paths(adj: Dict[int, List[int]]) -> List[Set[int]]:
         path = set()
 
         curr = start
-        visited.add(curr)
+        # visited.add(curr)
 
         while True:
             next = adj[curr][0]
