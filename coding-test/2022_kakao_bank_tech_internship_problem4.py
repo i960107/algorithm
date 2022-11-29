@@ -2,6 +2,8 @@ from typing import List, Final
 from collections import deque
 import heapq
 
+max_priority: Final = 100 * 10000
+
 
 class Job:
     def __init__(self, requested_at: int, duration: int, job_type: int, priority: int):
