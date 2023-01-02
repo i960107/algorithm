@@ -49,10 +49,10 @@ def solution(jobs: List[List[int]]) -> List[int]:
 
     def update(request: Job):
         nonlocal queue
-        priority_increasement = request.priority if not current or request.job_type != current.JobGroup.job_type else 0
+        # priority_increasement = request.priority if not current or request.job_type != current.JobGroup.job_type else 0
         for job_group in queue:
             if job_group.job_type == request.job_type:
-                job_group.total_priority += priority_increasement
+                job_group.total_priority += request.priority
                 job_group.total_duration += request.duration
 
     def add(request: Job):

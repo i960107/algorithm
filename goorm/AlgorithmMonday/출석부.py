@@ -1,5 +1,5 @@
 from typing import List, Tuple
-
+from sys import stdin
 
 def sort_by_name_and_height(arr: List[Tuple[str]]) -> List[Tuple[str]]:
     return sorted(arr, key=lambda x: (x[0], x[1]))
