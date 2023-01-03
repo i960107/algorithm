@@ -3,7 +3,7 @@ from typing import List
 '''숫자 채우기1'''
 
 
-def test_case(case_index: int) -> List[List[int]]:
+def test_case(case_index: int):
     n = int(input())
 
     EMPTY = -1
@@ -34,7 +34,6 @@ def test_case(case_index: int) -> List[List[int]]:
         r, c = nr, nc
 
     print_arr(arr, n)
-    return arr
 
 
 def print_arr(arr: List[List[int]], n: int):

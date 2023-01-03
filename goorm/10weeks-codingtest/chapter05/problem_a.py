@@ -6,8 +6,11 @@ from typing import List
 def solution(n: int, k: int, area: List[List[int]]) -> int:
     # 투포인터 슬라이딩 윈도우?
     # 폐기물 입장에서 영향을 끼칠 수 있는 곳들 - bfs?
+    # 브루트 포스 : o(k^2 * (n-k+1)^2). 최대 10000번의 연산 필요.
     answer = 0
-    return answer
+
+    for start_r in range(n - k):
+        for start_c in range(n - k):
 
 
 t = int(input())
