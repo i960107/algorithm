@@ -28,3 +28,5 @@ def network_delaytime(times: List[List[int]], n: int, k: int) -> int:
 print(network_delaytime([[2, 1, 1], [2, 3, 1], [3, 4, 1]], 4, 2))
 print(network_delaytime([[1, 2, 1]], 2, 1))
 print(network_delaytime([[1, 2, 1]], 2, 2))
+
+
