@@ -1,5 +1,7 @@
 from typing import List
+
 '''구입할 복권 구하기'''
+
 
 def solution(lotteries: List[List[int]]) -> int:
     analyzed = []
