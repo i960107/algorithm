@@ -11,6 +11,7 @@ for _ in range(M):
     is_higher[a][b] = False
     is_higher[b][a] = True
 
+# 도달이 가능하다면 성적 비교가 가능하다
 for k in range(1, N + 1):
     for a in range(1, N + 1):
         for b in range(1, N + 1):
@@ -18,6 +19,8 @@ for k in range(1, N + 1):
                 is_higher[a][b] = True
 
 count = 0
+# 각 학생을 번호에 따라 한 명씩 확인하면 도달 가능한지 체크
+# a -> b가 도달가능하다면 b -> a 도 도달가능하지 않나. 양방향 그래프이니깐
 for row in is_higher:
     print(row)
     defined = True
