@@ -44,15 +44,14 @@ from collections import deque
 
 def solution_fail(jobs: List[List[int]]) -> int:
     jobs.sort()
-    jobs = deque(jobs)
+    idx = 0
 
     n = len(jobs)
     total_response_time = 0
     t = 0
 
     queue = []
-    occupied_until = -1
-    while jobs or queue:
+    while idx < n:
         # 현재 시간에 들어온 요청이 있다면 queue에 넣어주기
         # 매번 jobs들을 선형탐색해야 햐나?
         # jobs에서 빠진 애들을 어떻게 처리하지..
@@ -65,26 +64,29 @@ def solution_fail(jobs: List[List[int]]) -> int:
         # 처음 아니고 중간에도 우선순위 큐가 빌 수 있음... -> 요청시간이 가장 빠른 것이 먼저 실행되도록 어떻게 하지..
         # 현재 시간을 기준으로 끝날 수 있는 작업을 큐에 넣고...나ㅓ라너란더ㅏ
 
-        while jobs:
-            requested, duration = jobs[0]
+        now = idx
+        for request in range(now, n):
+            requested, duration = jobs[request]
             if requested > t:
                 break
-            jobs.popleft()
-            heapq.heappush(queue, (duration - requested, duration))
+            heapq.heappush(queue, (- (duration - requested), duration))
+            idx += 1
 
         # 요청부터 종료까지 걸리시간  t + duration - requested
         # response_time이 긴 것 먼저 처리해야함.
         # duration 높고, requested 작은 것. 하지만 둘 사이에 우선수위 없음. duration - requested의 차이 큰것
-        if t > occupied_until and queue:
+        if queue:
             difference, duration = heapq.heappop(queue)
-            response_time = (t + difference)
+            response_time = (t - difference)
             total_response_time += response_time
-            occupied_until += duration
-        t += 1
+            t += duration
+        else:
+            t += 1
     return total_response_time // n
 
 
 def solution(jobs: List[List[int]]) -> int:
+    # 전체 응답시간의 합, 현재 시간, 처리된 job의 개수?
     answer, now, i = 0, 0, 0
     start = -1
     heap = []
@@ -92,6 +94,9 @@ def solution(jobs: List[List[int]]) -> int:
     while i < len(jobs):
         for requested, duration in jobs:
             if start < requested <= now:
+                # 왜 응답시간이 아닌 처리시간을 기준으로 우선순위를 매기지?
+                # 중복해서 들어갈 수 있지 않나?
+                # 실행중인 작업이 없을때 가장 먼저 요청이 들어온 것부터 실행되나?
                 heapq.heappush(heap, (duration, requested))
 
         if heap:
@@ -105,4 +110,4 @@ def solution(jobs: List[List[int]]) -> int:
     return answer // n
 
 
-print(solution([[0, 3], [1, 9], [2, 6]]))
+print(solution_fail([[0, 3], [1, 9], [2, 6]]))
