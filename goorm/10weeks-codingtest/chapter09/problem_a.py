@@ -15,9 +15,6 @@ class Graph:
 
 
 def __has_hamilton_path__(depth: int, current_node: int, visited: List[bool], graph: Graph) -> bool:
-    if visited[current_node]:
-        return False
-
     visited[current_node] = True
 
     has_path = False
@@ -27,6 +24,8 @@ def __has_hamilton_path__(depth: int, current_node: int, visited: List[bool], gr
 
     else:
         for nxt_node in range(1, graph.V + 1):
+            if visited[nxt_node]:
+                continue
             has_path = __has_hamilton_path__(depth + 1, nxt_node, visited, graph)
             if has_path:
                 break
@@ -36,7 +35,7 @@ def __has_hamilton_path__(depth: int, current_node: int, visited: List[bool], gr
 
 
 def has_hamilton_path(graph: Graph) -> bool:
-    visited = [False] * (graph.V)
+    visited = [False] * (graph.V + 1)
     for original_node in range(1, graph.V + 1):
         has = __has_hamilton_path__(1, original_node, visited, graph)
         if has:
