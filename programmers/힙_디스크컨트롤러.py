@@ -110,4 +110,36 @@ def solution(jobs: List[List[int]]) -> int:
     return answer // n
 
 
-print(solution_fail([[0, 3], [1, 9], [2, 6]]))
+def solution_mine(jobs: List[List[int]]) -> int:
+    # 무조건 짧은 요청부터 처리...
+    # 짧은 요청을 빨리 기다릴 수록 작업들이 기다리는 시간이 줄어듬!
+    t = 0
+    n = len(jobs)
+
+    jobs.sort()
+    jobs = deque(jobs)
+
+    queue = []
+
+    total_cost = 0
+
+    while jobs or queue:
+
+        while jobs and jobs[0][0] <= t:
+            # 전체 응답시간의 합이 작게 되려면...  duration - reqeust가 큰것부터 골라야하나 작은 것부터 골라야하나.. duration - request는 항상 고정..
+            # 종료시간이 빠른 것 기준으로 선택한다 X
+            requested, duration = jobs.popleft()
+            heapq.heappush(queue, (duration, requested))
+
+        if not queue:
+            t += 1
+            continue
+            
+        duration, requested = heapq.heappop(queue)
+        total_cost += (t + duration - requested)
+        t += duration
+    return total_cost // n
+
+
+print(solution([[0, 3], [1, 9], [2, 6]]))
+print(solution_try([[0, 3], [1, 9], [2, 6]]))

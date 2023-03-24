@@ -29,8 +29,11 @@ def solution(N: int, M: int, K: int, adj: Dict[int, List[int]]) -> int:
                 distance[nxt][paved + 1] = now_distance
                 heapq.heappush(queue, (now_distance, nxt, paved + 1))
 
+    # 실패  -> 간선의 개수가 K개 이하일 수 있음
+    # return int(distance[N][K])
     answer = INF
     for paved in range(K + 1):
+        print(distance[N][paved])
         if distance[N][paved] < answer:
             answer = distance[N][paved]
     return answer
