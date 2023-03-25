@@ -81,13 +81,17 @@ def minWindow(s: str, t: str) -> str:
 
 # print(minimum_window_substring("ADOBECODEBANC", "ABC"))
 # print(minimum_window_substring2("ADOBECODEBANC", "ABC"))
-print(minimum_window_substring("ABCDEFUCKYOU", "CK"))
-print(minimum_window_substring("ABFCCB", "BC"))
-print(minimum_window_substring2("ABCDEFUCKYOU", "CK"))
-print(minimum_window_substring2("ABFCCB", "BC"))
-print(minWindow("ABCDEFUCKYOU", "CK"))
-print(minWindow("ABFCCB", "BC"))
+# print(minimum_window_substring("ABCDEFUCKYOU", "CK"))
+# print(minimum_window_substring("ABFCCB", "BC"))
+# print(minimum_window_substring2("ABCDEFUCKYOU", "CK"))
+# print(minimum_window_substring2("ABFCCB", "BC"))
+# print(minWindow("ABCDEFUCKYOU", "CK"))
+# print(minWindow("ABFCCB", "BC"))
 # print(minimum_window_substring("ABCDEFUCKYOU", "CK"))
 # print(minimum_window_substring("ADOBECODEBANC", ""))
 # print(minimum_window_substring("", "ABC"))
 # print(minimum_window_substring("DEF", "ABC"))
+
+
+print(list(enumerate(range(5))))
+print(list(enumerate(range(5), 1)))

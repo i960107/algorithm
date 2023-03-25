@@ -46,7 +46,8 @@ from collections import Counter
 # 어떤 경우에 실패하지?
 # 포인터 늘려가기, 포인터 줄여가기
 # 비슷한 문제? -> 부분 문자열이 포함된 최소 윈도우!
-def solution(gems: List[str]) -> List[int]:
+# 윈도우 사이즈 결정 후 -> 투포인터 해야 함.
+def solution_fail(gems: List[str]) -> List[int]:
     # left, right포인터가 뒤집어지는 경우는 없나?
     n = len(gems)
     final_left, final_right = 0, n - 1
@@ -90,9 +91,36 @@ def solution(gems: List[str]) -> List[int]:
     return [final_left + 1, final_right + 1]
 
 
-# print(solution(["DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA"]))
-# print(solution(["XYZ", "XYZ", "XYZ"]))
-print(solution(["XYZ", "XYZ", "XXX"]))
-print(solution(["XYZ", "XXX", "XYZ"]))
-print(solution(["X", "Y", "Z"]))
-print(solution(["X"]))
+# dp보다는 빠름 왜?
+# 시간 초과 안 발생하는 이유?
+def solution(gems: List[str]) -> List[int]:
+    gems_count = len(set(gems))
+    current_counter = Counter()
+
+    INF = int(1e9)
+    start = end = INF
+    left = 0
+    # left = right일 수 있음
+    # 100000 * 100000 아닌가?
+    for right, gem in enumerate(gems):
+        current_counter[gem] += 1
+        if len([gem for gem, count in current_counter.items() if count >=1]) == gems_count:
+            while left < right and current_counter[gems[left]] > 1:
+                current_counter[gems[left]] -= 1
+                left += 1
+
+            # 어떻게 start가 더 작은 값을 하지?
+            # 항상 start <= left?
+            if end == INF or end - start > right - left:
+                start, end = left, right
+
+            current_counter[gems[left]] -= 1
+            left += 1
+
+    return [start + 1, end + 1]
+
+
+print(solution(["DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA"]))
+print(solution(["AA", "AB", "AC", "AA", "AC"]))
+print(solution(["XYZ", "XYZ", "XYZ"]))
+print(solution(["ZZZ", "YYY", "NNNN", "YYY", "BBB"]))
