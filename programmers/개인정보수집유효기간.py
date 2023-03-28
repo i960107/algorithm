@@ -3,22 +3,23 @@ from datetime import datetime
 
 
 def solution(today: str, terms: List[str], privacies: List[str]) -> List[int]:
-    date_format = "%Y.%m.%d"
     min_dates = dict()
-    today = datetime.strptime(today, date_format)
+    y, m, d = map(int, today.split("."))
+
+    # 이왜진...
+    # 0년 1월 1일 로부터 몇 일 후인지( currentTimeMillis 개념과 비슷)
+    today = y * 12 * 28 + (m - 1) * 28 + (d - 1)
     for term in terms:
         type, duration = term.split()
-        duration = int(duration)
-        min_year = today.year + ((today.month - duration) // 12)
-        min_month = (today.month - duration) % 12
-        min_dates[type] = datetime(min_year, min_month, today.day)
-    for type, min_date in min_dates.items():
-        print(type, min_date)
+        min_date = today - int(duration) * 28
+        min_dates[type] = min_date
 
     answer = []
     for index, privacy in enumerate(privacies, 1):
-        registration_date = datetime.strptime(privacy.split()[0], date_format)
+        y, m, d = map(int, privacy.split()[0].split("."))
+        registration_date = y * 12 * 28 + (m - 1) * 28 + (d - 1)
         type = privacy.split()[1]
+        # if min_dates[type] <= registration_date:
         if min_dates[type] >= registration_date:
             answer.append(index)
     return answer
