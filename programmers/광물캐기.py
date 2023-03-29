@@ -80,7 +80,47 @@ def solution(picks: List[int], minerals: List[str]) -> int:
     # return total_fatigue
 
 
-print(solution([1, 3, 2], ["diamond", "diamond", "diamond", "iron", "iron", "diamond", "iron", "stone"]))
-print(solution([0, 1, 1],
-               ["diamond", "diamond", "diamond", "diamond", "diamond", "iron", "iron", "iron", "iron", "iron",
-                "diamond"]))
+def solution_dfs(picks: List[int], minerals: List[str]) -> int:
+    intensity = {
+        "diamond": 3,
+        "iron": 2,
+        "stone": 1,
+
+    }
+
+    def dfs(left_picks: List[int], now: int, fatigue: int):
+        if now >= len(minerals) or sum(left_picks) == 0:
+            nonlocal min_fatigue
+            if min_fatigue > fatigue:
+                min_fatigue = fatigue
+            return
+        for pick_index, pick in enumerate(("diamond", "iron", "stone")):
+            if left_picks[pick_index] == 0:
+                continue
+            nxt_fatigue = fatigue
+            index = now
+            for _ in range(5):
+                if index >= len(minerals):
+                    break
+                pick_intensity = intensity[pick]
+                mineral_intensity = intensity[minerals[index]]
+                if pick_intensity >= mineral_intensity:
+                    nxt_fatigue += 1
+                else:
+                    nxt_fatigue += 5 ** (mineral_intensity - pick_intensity)
+                index += 1
+
+            nxt_left_picks = left_picks[::]
+            nxt_left_picks[pick_index] -= 1
+            dfs(nxt_left_picks, index, nxt_fatigue)
+
+    min_fatigue = int(1e9)
+    dfs(picks, 0, 0)
+    return min_fatigue
+
+
+print(solution_dfs([0, 1, 1],
+                   ["diamond", "diamond", "diamond", "diamond", "diamond", "iron", "iron", "iron", "iron", "iron",
+                    "diamond"]))
+
+print(solution_dfs([1, 3, 2], ["diamond", "diamond", "diamond", "iron", "iron", "diamond", "iron", "stone"]))
