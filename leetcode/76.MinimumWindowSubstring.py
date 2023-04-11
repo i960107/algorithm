@@ -78,6 +78,18 @@ def minWindow(s: str, t: str) -> str:
             left += 1
     return s[start:end]
 
+def solution(S:str, T:str) -> int:
+    missing = len(T)
+    need = counter(T)
+
+    # 모든 문자가 포함될때까지 윈도우 사이즈 늘리기
+    left = right = end = 0
+    for right, char in enumerate(S, 1):
+
+
+    # 최소 윈도우로 줄이기
+    while
+    pass
 
 # print(minimum_window_substring("ADOBECODEBANC", "ABC"))
 # print(minimum_window_substring2("ADOBECODEBANC", "ABC"))
