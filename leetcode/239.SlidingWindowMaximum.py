@@ -58,6 +58,27 @@ def max_in_range(nums: List[int], start: int, end: int) -> int:
     return max_num
 
 
+def solution(nums: List[int], k: int) -> List[int]:
+    result = []
+    INF = -int(1e9)
+    max_num = INF
+    window = deque()
+    for num in nums:
+        window.append(num)
+
+        if len(window) < k:
+            continue
+
+        if max_num == INF:
+            max_num = max(window)
+
+        result.append(max_num)
+        popped = window.popleft()
+
+
+
+
+
 print(max_sliding_window([1, 3, -1, -3, 5, 3, 6, 7], 3))
 print(max_sliding_window_fail([1, 3, -1, -3, 5, 3, 6, 7], 3))
 # arr = [1, 3, -1, -3, 5, 3, 6, 7]
