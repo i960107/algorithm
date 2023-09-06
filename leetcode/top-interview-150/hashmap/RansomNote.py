@@ -20,9 +20,6 @@ class Solution:
     # Counter의 합집합 연산 사용 -> 더 빠름
     # 글자를 하나하나 세는게 아니라서 중복된 문자들을 한번에 처리해서?
     def canConstruct2(self, ransomNote: str, magazine: str) -> bool:
-        if len(ransomNote) > len(magazine):
-            return False
-
         magazineChars = Counter(magazine)
         ransomNoteChars = Counter(ransomNote)
 
@@ -33,3 +30,9 @@ s = Solution()
 print(s.canConstruct("a", "b"))
 print(s.canConstruct("aa", "ab"))
 print(s.canConstruct("aa", "aab"))
+
+a = [1, 2]
+b = [1, 2]
+print(id(a))
+print(id(b))
+print(a == b)

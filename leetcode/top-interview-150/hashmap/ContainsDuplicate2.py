@@ -1,8 +1,11 @@
 from typing import List
+from collections import defaultdict
 
 
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        if k == 0:
+            return False
         d = dict()
 
         for i, n in enumerate(nums):
@@ -10,6 +13,21 @@ class Solution:
                 if abs(d[n] - i) <= k:
                     return True
             d[n] = i
+        return False
+
+    def containsNearbyDuplicate2(self, nums: List[int], k: int) -> bool:
+        if k == 0:
+            return False
+        d = defaultdict(list)
+        for i, x in enumerate(nums):
+            d[x].append(i)
+
+        for num, indices in d.items():
+            if len(indices) < 2:
+                continue
+            for i in range(1, len(indices)):
+                if indices[i] - indices[i - 1] <= k:
+                    return True
         return False
 
         # 만약 원소의 값이 모두 가은 10^5  길이의 length가 있다면.

@@ -9,16 +9,19 @@ class Solution:
         # len(obj) 는 obj.__len__()을 호출함 따라서 차이가 없음.
         # 보통 __를 직접 호출하지는 않음.
         # 평균적으로 length가 같은 문자열이 많아서 오히려 더 연산이 늘어나는 결과가 생기기 때문?
-        if s.__len__() != t.__len__():
-            return False
+        # if s.__len__() != t.__len__():
+        #     return False
         # if len(s) != len(t):
         #     return False
         sCounter = Counter(s)
         tCounter = Counter(t)
+        print(sCounter, tCounter)
         return sCounter == tCounter
 
     def isAnagram2(self, s: str, t: str) -> bool:
         d = dict()
+        if len(s) != len(t):
+            return False
         for c in s:
             d[c] = d.get(c, 0) + 1
 
@@ -34,5 +37,7 @@ class Solution:
 
 
 s = Solution()
-print(s.isAnagram(s="anagram", t="nagaram"))
+print(s.isAnagram(s="anagramm", t="nagaramm"))
 print(s.isAnagram2(s="anagram", t="nagaram"))
+print(s.isAnagram(s="abc", t="a"))
+print(s.isAnagram(s="a", t="ab"))
