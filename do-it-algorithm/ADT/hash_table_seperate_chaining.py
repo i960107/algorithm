@@ -6,6 +6,8 @@ class Node:
 
 
 class HashTable:
+    LOAD_FACTOR = 0.75
+
     def __init__(self, capacity):
         self.table = [None] * capacity
         self.capacity = capacity
@@ -23,7 +25,7 @@ class HashTable:
         return None
 
     def remove(self, key: str) -> bool:
-        index = hash(key)
+        index = self.getHashing(key)
         if self.table[index] is None:
             return False
         curr = self.table[index]
@@ -32,29 +34,43 @@ class HashTable:
             if curr.key != key:
                 prev = curr
                 curr = curr.next
-            if prev is not None:
-                prev.next = curr.next
-            else:
-                self.table[index] = curr.next
+        if prev is not None:
+            prev.next = curr.next
+        else:
+            self.table[index] = curr.next
+        self.numberOfItems -= 1
 
     def put(self, key: str, value: str) -> bool:
-        index = hash(key)
+        index = self.getHashing(key)
         if self.table[index] is None:
             self.table[index] = Node(key, value, None)
-            return True
+            self.numberOfItems += 1
         else:
             # 같은 key 값이 존재하는 경우 실패.
             head = self.table[index]
             curr = head
+            duplicated = False
             while curr:
                 if curr.key == key:
-                    return False
+                    curr.value = value
+                    duplicated = True
+                    break
                 curr = curr.next
-            self.table[index] = Node(key, value, head)
+            if not duplicated:
+                self.table[index] = Node(key, value, head)
+            self.numberOfItems += 1
+            if self.isResizeRequired():
+                self.resize()
 
-    def __hash__(self, key: str) -> int:
-        hash_digest = 0
-        for c in key:
-            hash_digest += ord(c)
+    def resize(self):
+        newTable = [None] * (self.capacity * 2)
+        for i in range(self.capacity):
+            newTable[i] = self.table[i]
+        self.capacity *= 2
+        self.table = newTable
 
-        return hash_digest % self.capacity
+    def isResizeRequired(self) -> bool:
+        return self.numberOfItems / self.capacity >= self.LOAD_FACTOR
+
+    def getHashing(self, key: str) -> int:
+        return key.__hash__() % self.capacity
