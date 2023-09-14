@@ -8,6 +8,7 @@ class Solution:
     # 한번 이상 발견되면 그만.
     # time limit 줄일 수 있도록 words -> set(words)
     # basic idea : trie로 문자열을 효율적으로 검색하고, dfs로 가능한 모든 경로를 탐색한다는 것이다. 백트래킹할지말지 trie에 있는지 없는
+    # words are unique
     def findWordsFail(self, board: List[List[str]], words: List[str]) -> List[str]:
         m = len(board)
         n = len(board[0])
@@ -61,6 +62,60 @@ class Solution:
 
         return result
 
+    def findWords2(self, board: List[List[str]], words: List[str]) -> List[str]:
+        m = len(board)
+        n = len(board[0])
+
+        di = (0, 0, 1, -1)
+        dj = (1, -1, 0, 0)
+
+        EOW = "EOW"
+        root = dict()
+        for word in words:
+            curr = root
+            for c in word:
+                if c not in curr:
+                    curr[c] = dict()
+                curr = curr[c]
+            curr[EOW] = word
+
+        # trie에서 eow에서 string 찾을 수 있는 방법?
+        # # 에 eof를 저장한다.
+        def dfs(i: int, j: int, visited: List[List[bool]], node: Dict[str, Dict]):
+            visited[i][j] = True
+
+            children = node[board[i][j]]
+            # 이미 탐색한 word는 제거한다.
+            if EOW in children:
+                result.append(children[EOW])
+                children.pop(EOW)
+
+            for k in range(len(di)):
+                ni = i + di[k]
+                nj = j + dj[k]
+                if not ((0 <= ni < m) and (0 <= nj < n)):
+                    continue
+                if visited[ni][nj]:
+                    continue
+                if board[ni][nj] not in children:
+                    continue
+                dfs(ni, nj, visited, children)
+
+            visited[i][j] = False
+
+            if not children:
+                node.pop(board[i][j])
+
+        visited = [[False] * n for _ in range(m)]
+        result = []
+
+        # visited를 사용하지 않아도 되는 이유
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] in root:
+                    dfs(i, j, visited, root)
+        return result
+
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
         m = len(board)
         n = len(board[0])
@@ -76,10 +131,11 @@ class Solution:
                 if c not in curr:
                     curr[c] = dict()
                 curr = curr[c]
-            curr[EOW] = True
+            curr[EOW] = word
 
         # trie에서 eow에서 string 찾을 수 있는 방법?
-        def dfs(i: int, j: int, visited: List[List[bool]], children: Dict[str, List[str]], path: List[str]):
+        # # 에 eof를 저장한다.
+        def dfs(i: int, j: int, visited: List[List[bool]], children: Dict[str, Dict], path: List[str]):
             visited[i][j] = True
             path.append(board[i][j])
 
@@ -121,7 +177,7 @@ class Solution:
             # Traverse the trie to the next node
             cur = root[letter]
             # Check if the node has a word in it
-            word = cur.pop('#', False)
+            word = cur.pop('#')
             if word:
                 # If a word is found, add it to the results list
                 res.append(word)
@@ -136,6 +192,7 @@ class Solution:
             # Restore the original value of the current position on the board
             board[x][y] = letter
             # If the current node has no children, remove it from the trie
+            # 마지막 노드까지 살폈을때 trie에서 제거.
             if not cur:
                 root.pop(letter)
 
@@ -151,10 +208,11 @@ class Solution:
         m, n = len(board), len(board[0])
         # Initialize a list to store the results
         res = []
+        return res
 
 
 s = Solution()
-print(s.findWords(board=[["o", "a", "a", "n"], ["e", "t", "a", "e"], ["i", "h", "k", "r"], ["i", "f", "l", "v"]],
-                  words=["oath", "pea", "eat", "rain"]))
-print(s.findWords([["o", "a", "b", "n"], ["o", "t", "a", "e"], ["a", "h", "k", "r"], ["a", "f", "l", "v"]],
-                  ["oa", "oaa"]))
+print(s.findWords2(board=[["o", "a", "a", "n"], ["e", "t", "a", "e"], ["i", "h", "k", "r"], ["i", "f", "l", "v"]],
+                   words=["oath", "pea", "eat", "rain"]))
+print(s.findWords2([["o", "a", "b", "n"], ["o", "t", "a", "e"], ["a", "h", "k", "r"], ["a", "f", "l", "v"]],
+                   ["oa", "oaa"]))
