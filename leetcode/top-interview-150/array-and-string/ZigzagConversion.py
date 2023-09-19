@@ -3,7 +3,7 @@ from collections import defaultdict
 
 class Solution:
     # 구현..
-    def convert(self, s: str, numRows: int) -> str:
+    def convert1(self, s: str, numRows: int) -> str:
         result = []
         n = len(s)
 
@@ -23,11 +23,38 @@ class Solution:
         groups = [r for r in range(numRows)]
         groups += [r for r in range(numRows - 2, 0, -1)]
 
-        result = []
-        for i, n in enumerate(groups):
-            result.append((n, i))
-        result.sort()
-        
+        # 정렬된 리스트의 인덱스를 가져오기
+        sorted_index = sorted(range(len(groups)), key=lambda i: (groups[i], i))
+
+        start = 0
+        result = [[] for _ in range(numRows)]
+        while start < len(s):
+            for i in range(len(groups)):
+                if start + i >= len(s):
+                    continue
+                result[groups[i]].append(s[start + i])
+            start = start + len(groups)
+
+        return ''.join([''.join(x) for x in result])
+
+    def convert2(self, s, numRows):
+        if numRows == 1 or numRows >= len(s):
+            return s
+
+        rows = [[] for row in range(numRows)]
+        index = 0
+        step = -1
+        for char in s:
+            rows[index].append(char)
+            if index == 0:
+                step = 1
+            elif index == numRows - 1:
+                step = -1
+            index += step
+
+        for i in range(numRows):
+            rows[i] = ''.join(rows[i])
+        return ''.join(rows)
 
 
 s = Solution()
