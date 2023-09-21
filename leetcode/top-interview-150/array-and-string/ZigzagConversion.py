@@ -37,6 +37,7 @@ class Solution:
 
         return ''.join([''.join(x) for x in result])
 
+    # 어렵게 생각하지 말고, 한칸씩 증가했다가 한칸씩 내려옴
     def convert2(self, s, numRows):
         if numRows == 1 or numRows >= len(s):
             return s

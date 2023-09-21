@@ -5,6 +5,35 @@ class Solution:
     def intToRoman(self, num: int) -> str:
         d = {
             1: "I",
+            5: "V",
+            10: "X",
+            50: "L",
+            100: "C",
+            500: "D",
+            1000: "M"
+        }
+
+        multiple = 1
+        result = []
+        while num > 0:
+            n = num % 10
+            if n * multiple in d:
+                result.append(d[n * multiple])
+            # 2,3 or 6,7,8
+            elif n % 5 <= 3:
+                result.append((d[5 * multiple] if n > 5 else '') + d[multiple] * (n % 5))
+            # 4  or 9
+            elif n % 5 == 4:
+                result.append(d[multiple] + (d[10 * multiple] if n > 5 else d[5 * multiple]))
+
+            num //= 10
+            multiple *= 10
+        return ''.join(result[::-1])
+
+    # 4, 9 계열만 딕셔너리에 추가해줘도..
+    def intToRoman2(self, num: int) -> str:
+        num_map = {
+            1: "I",
             4: "IV",
             5: "V",
             9: "IX",
@@ -16,25 +45,16 @@ class Solution:
             400: "CD",
             500: "D",
             900: "CM",
-            1000: "M",
+            1000: "M"
         }
+        # 400부터는 없음
 
-        # possible_numbers = dict()
-        #
-        # for c1, n1 in d.items():
-        #     for c2, n2 in d.items():
-        #         if n1 > n2:
-        #             continue
-        #         elif n1 == n2:
-        #             possible_numbers[n1] = c1
-        #         elif n1 < n2:
-        #             possible_numbers[n2 - n1] = c1 + c2
-        # 가장 가까운 수를 구해야하나..
-        s = str(num)
-        print(num)
-        for i, c in enumerate(s):
-            target = int(c) * (10 ** (len(s) - i - 1))
-            print(target)
+        r = ''
+        for n in num_map:
+            while n <= num:
+                r += num_map[n]
+                num -= n
+        return r
 
 
 s = Solution()
