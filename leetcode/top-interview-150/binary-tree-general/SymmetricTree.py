@@ -13,4 +13,5 @@ class Solution:
                 return False
             return True
 
+
         return _isSymetric(root.left, root.right)
