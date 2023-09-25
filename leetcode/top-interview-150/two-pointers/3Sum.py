@@ -53,32 +53,33 @@ class Solution:
         #             break
         return result
 
-    class Solution:
-        def threeSum(self, nums: List[int]) -> List[List[int]]:
-            nums.sort()
-            answer = []
-            for i in range(len(nums) - 2):
-                if nums[i] > 0:
-                    break
-                if i > 0 and nums[i] == nums[i - 1]:
-                    continue
-                l = i + 1
-                r = len(nums) - 1
-                while l < r:
-                    total = nums[i] + nums[l] + nums[r]
-                    if total < 0:
-                        l += 1
-                    elif total > 0:
-                        r -= 1
-                    else:
-                        triplet = [nums[i], nums[l], nums[r]]
-                        answer.append(triplet)
-                        while l < r and nums[l] == triplet[1]:
-                            l += 1
-                        while l < r and nums[r] == triplet[2]:
-                            r -= 1
-            return answer
+    def threeSum2(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        n = len(nums)
+        answer = []
+        for i in range(n - 2):
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+            if nums[i] > 0:
+                break
+            j = i + 1
+            k = n - 1
+            while j < k:
+                total = nums[i] + nums[j] + nums[k]
+                if total < 0:
+                    j += 1
+                elif total > 0:
+                    k -= 1
+                else:
+                    answer.append([nums[i], nums[j], nums[k]])
+                    j += 1
+                    k -= 1
+                    while j < n and nums[j] == nums[j - 1]:
+                        j += 1
+                    while k > 0 and nums[k] == nums[k + 1]:
+                        k -= 1
+        return answer
 
 
 s = Solution()
-print(s.threeSum())
+print(s.threeSum2([-1, 0, 1, 2, -1, -4]))
