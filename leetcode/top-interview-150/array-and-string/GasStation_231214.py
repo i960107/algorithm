@@ -30,8 +30,8 @@ class Solution:
                 deficit += balance
                 start = i + 1
                 balance = 0
-            if deficit + balance >= 0:
-                return start
+        if deficit + balance >= 0:
+            return start
         return - 1
 
 
