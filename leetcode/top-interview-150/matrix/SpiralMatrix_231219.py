@@ -24,7 +24,19 @@ class Solution:
             i, j = nr, nc
         return answer
 
+    def spiralOrder2(self, matrix: List[List[int]]) -> List[int]:
+        result = []
+        while matrix:
+            result += matrix.pop(0)
+            # 이것과 같은 효과
+            # matrix = [x for x in zip(*matrix)][::-1]
+            matrix = [*zip(*matrix)][::-1]
+            print("result", result)
+            print("matrix", matrix)
+            print()
+        return result
+
 
 s = Solution()
-print(s.spiralOrder(matrix=[[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))
-print(s.spiralOrder(matrix=[[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
+print(s.spiralOrder2(matrix=[[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))
+print(s.spiralOrder2(matrix=[[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
