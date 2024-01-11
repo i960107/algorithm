@@ -46,7 +46,8 @@ class Solution:
         return lis
 
     # nums자체는 정렬되어있지 않은 상태로 이진탐색 불가능
-    # asceding array를 만들어간다.
+    # ascending array를 만들어간다.
+    # 자신보다 크거나 같은 원소중 최소값을 대체 -> 같은 값을 대체하면 겹치지 않도록, 큰 값을 대체하면 더 긴 subarray를 만들 확률이 높아진다.
     def lengthOfLIS2(self, nums: List[int]):
         def bisect_left(target: int):
             lo, hi = 0, len(arr) - 1
@@ -67,7 +68,6 @@ class Solution:
             else:
                 arr[bisect_left(n)] = n
         return len(arr)
-
 
     # 반례 [4, 10, 4, 3, 8, 9]
     def lengthOfLIS_Fail2(self, nums: List[int]):
