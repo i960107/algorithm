@@ -80,13 +80,6 @@ class Solution:
         return len(arr)
 
 
-# isSubsequence문제와 차이점?
-# two pointer로 해결할 수 없음.
-def longestCommonSubsequence(text1: str, text2: str) -> int:
-    text1 = len()
-    j
-
-
 s = Solution()
 print(s.lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]))
 print(s.lengthOfLIS([0, 1, 0, 3, 2, 3]))
