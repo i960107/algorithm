@@ -40,4 +40,16 @@ def solution(money: List[int]) -> int:
     return max(dp1[-1], dp2[-1])
 
 
+def solution2(money: List[int]) -> int:
+    def helper(nums):
+        rob1, rob2 = 0, 0
+        for n in nums:
+            newRob = max(rob1 + n, rob2)
+            rob1 = rob2
+            rob2 = newRob
+        return rob2
+
+    return max(money[0], helper(money[:-1]), helper(money[1:]))
+
+
 print(solution([2, 3, 2]))  # 3
