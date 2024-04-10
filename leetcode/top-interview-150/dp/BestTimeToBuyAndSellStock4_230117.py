@@ -14,7 +14,7 @@ class Solution:
         # 0번째 날에 샀을때 0 ~ n까지 최대 profit k번 거래.
         return dp[0][0][k]
 
-    def maxProfit(self, k: int, prices: List[int]) -> int:
+    def maxProfit2(self, k: int, prices: List[int]) -> int:
         n = len(prices)
         dp = [[[0 for _ in range(k + 1)] for _ in range(2)] for _ in range(n)]
         if n <= 1 or k == 0: return 0
